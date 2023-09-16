@@ -24,11 +24,11 @@ public class VariablesTheme {
         double penPrice = 200.00;
         double bookPrice = 100.00;
         double discount = 0.11;
-        double rezult = penPrice + bookPrice;
-        System.out.println("Общая стоимость товаров без скидки: " + rezult +
-                " руб.\nCумма скидки: " + (rezult * discount) + 
-                " руб.\nОбщая стоимость товаров со скидкой: " + (rezult - rezult * discount) + 
-                " руб.");
+        double withoutDiscount = penPrice + bookPrice;
+        System.out.println("Общая стоимость товаров без скидки: " + withoutDiscount +
+                " руб.\nCумма скидки: " + (withoutDiscount * discount) + 
+                " руб.\nОбщая стоимость товаров со скидкой: " +
+                 (withoutDiscount - withoutDiscount * discount) + " руб.");
 
         System.out.println("\n3. Вывод слова JAVA");
         System.out.println("   J    a  v     v  a\n" + 
@@ -37,22 +37,22 @@ public class VariablesTheme {
                 " JJ  a     a  V  a     a");
 
         System.out.println("\n4. Вывод min и max значений целых числовых типов");
-        byte varByte = 127;
-        System.out.println("Переменная типа byte:\n первоначальное значение: " + varByte + 
-                "\n значение после инкремента на единицу: " + (++varByte) + 
-                "\n значение после декремента на единицу: " + (--varByte));
-        short varShort = 32_767;
-        System.out.println("Переменная типа short:\n первоначальное значение: " + varShort + 
-                "\n значение после инкремента на единицу: " + (++varShort) + 
-                "\n значение после декремента на единицу: " + (--varShort));
-        int varInt = 2_147_483_647;
-        System.out.println("Переменная типа int:\n первоначальное значение: " + varInt + 
-                "\n значение после инкремента на единицу: " + (++varInt) + 
-                "\n значение после декремента на единицу: " + (--varInt));
-        long varLong = 9_223_372_036_854_775_807L;
-        System.out.println("Переменная типа long:\n первоначальное значение: " + varLong + 
-                "\n значение после инкремента на единицу: " + (++varLong) + 
-                "\n значение после декремента на единицу: " + (--varLong));
+        byte maxByte = 127;
+        System.out.println("Переменная типа byte:\n первоначальное значение: " + maxByte + 
+                "\n значение после инкремента на единицу: " + (++maxByte) + 
+                "\n значение после декремента на единицу: " + (--maxByte));
+        short maxShort = 32_767;
+        System.out.println("Переменная типа short:\n первоначальное значение: " + maxShort + 
+                "\n значение после инкремента на единицу: " + (++maxShort) + 
+                "\n значение после декремента на единицу: " + (--maxShort));
+        int maxInt = 2_147_483_647;
+        System.out.println("Переменная типа int:\n первоначальное значение: " + maxInt + 
+                "\n значение после инкремента на единицу: " + (++maxInt) + 
+                "\n значение после декремента на единицу: " + (--maxInt));
+        long maxLong = 9_223_372_036_854_775_807L;
+        System.out.println("Переменная типа long:\n первоначальное значение: " + maxLong + 
+                "\n значение после инкремента на единицу: " + (++maxLong) + 
+                "\n значение после декремента на единицу: " + (--maxLong));
 
         System.out.println("\n5. Перестановка значений переменных");
         int num1 = 2;
@@ -77,35 +77,35 @@ public class VariablesTheme {
         System.out.println(" новые значения переменных: num1 = " + num1 + " num2 = " + num2);
 
         System.out.println("\n6. Вывод символов и их кодов");
-        char charDollar = '$';
-        char charAsterisk = '*';
-        char charAtSign = '@';
-        char charVerticalBar = '|';
-        char charTilde = '~';
-        System.out.println((int) charDollar + "\t" + charDollar + "\n" + (int) charAsterisk + 
-                "\t" + charAsterisk + "\n" + (int) charAtSign + "\t" + charAtSign + "\n" + 
-                (int) charVerticalBar + "\t" + charVerticalBar + "\n" + 
-                (int) charTilde + "\t" + charTilde);
+        char Dollar = '$';
+        char Asterisk = '*';
+        char AtSign = '@';
+        char VerticalBar = '|';
+        char Tilde = '~';
+        System.out.println((int) Dollar + "\t" + Dollar + "\n" + (int) Asterisk + 
+                "\t" + Asterisk + "\n" + (int) AtSign + "\t" + AtSign + "\n" + 
+                (int) VerticalBar + "\t" + VerticalBar + "\n" + 
+                (int) Tilde + "\t" + Tilde);
 
         System.out.println("\n7. Вывод в консоль ASCII-арт Дюка");
-        char charSlash = '/';
-        char charBackslash = '\\';
-        char charUnderscore = '_';
-        char charLeftParenthesis = '(';
-        char charRightParanthesis = ')';
-        System.out.println("    " + charSlash + charBackslash +  
-                "\n   " + charSlash + "  " + charBackslash +  
-                "\n  " + charSlash + charUnderscore + charLeftParenthesis + " " + 
-                charRightParanthesis + charBackslash + 
-                "\n " + charSlash + "      " + charBackslash + 
-                " \n" + charSlash + charUnderscore + charUnderscore + charUnderscore + 
-                charUnderscore + charSlash + charBackslash + charUnderscore + 
-                charUnderscore + charBackslash);
+        char Slash = '/';
+        char Backslash = '\\';
+        char Underscore = '_';
+        char LeftParenthesis = '(';
+        char RightParanthesis = ')';
+        System.out.println("    " + Slash + Backslash +  
+                "\n   " + Slash + "  " + Backslash +  
+                "\n  " + Slash + Underscore + LeftParenthesis + " " + 
+                RightParanthesis + Backslash + 
+                "\n " + Slash + "      " + Backslash + 
+                " \n" + Slash + Underscore + Underscore + Underscore + 
+                Underscore + Slash + Backslash + Underscore + 
+                Underscore + Backslash);
 
         System.out.println("\n8. Вывод количества сотен, десятков и единиц числа");
         int num = 123;
         int hundreds = num / 100;
-        int tens = num %100 / 10;
+        int tens = num % 100 / 10;
         int ones = num % 10;
         int sum = hundreds + tens + ones;
         int multiplication = hundreds * tens * ones;

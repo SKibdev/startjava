@@ -77,30 +77,30 @@ public class VariablesTheme {
         System.out.println(" новые значения переменных: num1 = " + num1 + " num2 = " + num2);
 
         System.out.println("\n6. Вывод символов и их кодов");
-        char Dollar = '$';
-        char Asterisk = '*';
-        char AtSign = '@';
-        char VerticalBar = '|';
-        char Tilde = '~';
-        System.out.println((int) Dollar + "\t" + Dollar + "\n" + (int) Asterisk + 
-                "\t" + Asterisk + "\n" + (int) AtSign + "\t" + AtSign + "\n" + 
-                (int) VerticalBar + "\t" + VerticalBar + "\n" + 
-                (int) Tilde + "\t" + Tilde);
+        char dollar = '$';
+        char asterisk = '*';
+        char atSign = '@';
+        char verticalBar = '|';
+        char tilde = '~';
+        System.out.println((int) dollar + "\t" + dollar + "\n" + (int) asterisk + 
+                "\t" + asterisk + "\n" + (int) atSign + "\t" + atSign + "\n" + 
+                (int) verticalBar + "\t" + verticalBar + "\n" + 
+                (int) tilde + "\t" + tilde);
 
         System.out.println("\n7. Вывод в консоль ASCII-арт Дюка");
-        char Slash = '/';
-        char Backslash = '\\';
-        char Underscore = '_';
-        char LeftParenthesis = '(';
-        char RightParanthesis = ')';
-        System.out.println("    " + Slash + Backslash +  
-                "\n   " + Slash + "  " + Backslash +  
-                "\n  " + Slash + Underscore + LeftParenthesis + " " + 
-                RightParanthesis + Backslash + 
-                "\n " + Slash + "      " + Backslash + 
-                " \n" + Slash + Underscore + Underscore + Underscore + 
-                Underscore + Slash + Backslash + Underscore + 
-                Underscore + Backslash);
+        char slash = '/';
+        char backslash = '\\';
+        char underscore = '_';
+        char leftParenthesis = '(';
+        char rightParanthesis = ')';
+        System.out.println("    " + slash + backslash +  
+                "\n   " + slash + "  " + backslash +  
+                "\n  " + slash + underscore + leftParenthesis + " " + 
+                rightParanthesis + backslash + 
+                "\n " + slash + "      " + backslash + 
+                " \n" + slash + underscore + underscore + underscore + 
+                underscore + slash + backslash + underscore + 
+                underscore + backslash);
 
         System.out.println("\n8. Вывод количества сотен, десятков и единиц числа");
         int num = 123;

@@ -69,7 +69,6 @@ public class IfElseStatementTheme {
         int onesNum3 = num3 % 100 % 10;
         int tensNum3 = num3 % 100 / 10;
         int hundredsNum3 = num3 / 100;
-
         boolean isEqualOnes = onesNum3 - num4 % 100 % 10 == 0;
         boolean isEqualTens = tensNum3 - num4 % 100 / 10 == 0;
         boolean isEqualHundreds = hundredsNum3 - num4 / 100 == 0;
@@ -94,52 +93,50 @@ public class IfElseStatementTheme {
 
         System.out.println("\n5. Определение символа по его коду");
         char symbol = '\u0057';
-        if (48 <= symbol && symbol <= 57) {
+        if (symbol >= '0' && symbol <= '9') {
             System.out.println("Символ " + symbol + " является цифрой");
-        } else if (65 <= symbol && symbol <= 90) {
+        } else if (symbol >= 'A' && symbol <= 'Z') {
             System.out.println("Символ " + symbol + " является большой буквой");
-        } else if (97 <= symbol && symbol <= 122) {
+        } else if (symbol >= 'a' && symbol <= 'z') {
             System.out.println("Символ " + symbol + " является маленькой буквой");
         } else {
             System.out.println("Символ " + symbol + " - не буква и не цифра");
         }
 
         System.out.println("\n6. Подсчет суммы вклада и начисленных банком %");
-        double depositAmount = 301000;
-        double depositInterest = 5;
+        double deposit = 301000;
+        double percent = 10;
 
-        if (depositAmount == 100000 || (100000 < depositAmount && depositAmount <= 300000)) {
-            depositInterest = 7;
-        } else if (depositAmount > 300000) {
-            depositInterest = 10;
+        if (deposit < 100000) {
+            percent = 5;
+        } else if (deposit <= 300000) {
+            percent = 7;
         }
 
-        System.out.println("Сумма вклада = " + depositAmount + 
-                "\nСумма начисленного % = " + depositAmount * depositInterest / 100 + 
-                "\nИтоговая сумма с % = " + 
-                (depositAmount + depositAmount * depositInterest / 100));
+        System.out.println("Сумма вклада = " + deposit + 
+                "\nСумма начисленного % = " + deposit * percent / 100 + 
+                "\nИтоговая сумма с % = " + (deposit + deposit * percent / 100));
 
         System.out.println("\n7. Определение оценки по предметам");
         int percentHistory = 59;
-
         int gradeHistory = 2;
 
-        if (60 < percentHistory & percentHistory <= 73) {
+        if (percentHistory > 60 && percentHistory <= 73) {
             gradeHistory = 3;
-        } else if (73 < percentHistory & percentHistory <= 91) {
+        } else if (percentHistory > 73 && percentHistory <= 91) {
             gradeHistory = 4;
-        } else if (91 < percentHistory) {
+        } else if (percentHistory > 91) {
             gradeHistory = 5;
         }
 
         int percentProgramming = 92;
         int gradeProgramming = 2;
 
-        if (60 < percentProgramming & percentProgramming <= 73) {
+        if (percentProgramming > 60 && percentProgramming <= 73) {
             gradeProgramming = 3;
-        } else if (73 < percentProgramming & percentProgramming <= 91) {
+        } else if (percentProgramming > 73 && percentProgramming <= 91) {
             gradeProgramming = 4;
-        } else if (91 < percentProgramming) {
+        } else if (percentProgramming > 91) {
             gradeProgramming = 5;
         }  
 

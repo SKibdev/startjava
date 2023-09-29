@@ -5,9 +5,10 @@ public class Calculator {
         //  Возможные операции +, -, *, /, ^, %
         char sign = '^';
         int result = 1;
+        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' || 
+                sign == '^' || sign == '%';
 
-        if (sign == '+' || sign == '-' || sign == '*' || sign == '/' || 
-                sign == '^' || sign == '%') {
+        if (isSign) {
             if (num1 > 0 && num2 > 0) {
                 if (sign == '+') {
                     result = num1 + num2;

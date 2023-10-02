@@ -20,21 +20,20 @@ public class CyclesTheme {
         int num1 = 10;
         int num2 = 5;
         int num3 = -1;
-        int max = 0;
-        int min = 0;
+        int min = num1;
+        int max = num2;
 
-        if ((num1 > num2) && (num2 > num3)) {
+        if (num2 < min) {
+            min = num1;
+        }
+        if (num3 < min) { 
+            min = num3;
+        }
+        if (num1 > max) {
             max = num1;
-            min = num3;
-        } else if (num2 < num3) {
+        } 
+        if (num3 > max) {
             max = num3;
-            min = num1;
-        } else if (num3 < num1) {
-            max = num2;
-            min = num3;
-        } else {
-            max = num2;
-            min = num1;
         }
 
         for (int i = max - 1; i > min; i--) {
@@ -146,14 +145,13 @@ public class CyclesTheme {
         System.out.println("\n8. Проверка, является ли число палиндромом");
         int testNum = 1234321;
         int copyTestNum = testNum;
-        int onesNum = 0;
         int reverseNum = 0;
 
         while (copyTestNum > 0) {
             reverseNum *= 10;
-            onesNum = copyTestNum % 10;
+            int digit = copyTestNum % 10;
             copyTestNum /= 10;
-            reverseNum += onesNum;
+            reverseNum += digit;
         }
 
         if (testNum == reverseNum) {
@@ -164,24 +162,24 @@ public class CyclesTheme {
 
         System.out.println("\n9. Проверка, является ли число счастливым");
         int luckyNum = 653653;
-        int testNum1 = luckyNum / 1000;
-        int testNum2 = luckyNum % 1000;
-        int sumDigitsTestNum1 = 0;
-        int sumDigitsTestNum2 = 0;
+        int leftHalf = luckyNum / 1000;
+        int rightHalf = luckyNum % 1000;
+        int sumLeftHalf = 0;
+        int sumRightHalf = 0;
 
         for (int i = 0; i < 3; i++) {
-            sumDigitsTestNum1 += testNum1 % 10;
-            testNum1 /= 10;
-            sumDigitsTestNum2 += testNum2 % 10;
-            testNum2 /= 10;
+            sumLeftHalf += leftHalf % 10;
+            leftHalf /= 10;
+            sumRightHalf += rightHalf % 10;
+            rightHalf /= 10;
         }
         
-        if (sumDigitsTestNum1 == sumDigitsTestNum2) {
+        if (sumLeftHalf == sumRightHalf) {
             System.out.println("Число " + luckyNum + " является счастливым \n" + 
-                    "Сумма цифр ABC = " + sumDigitsTestNum1 + ", а сумма DEF = " + sumDigitsTestNum2);
+                    "Сумма цифр ABC = " + sumLeftHalf + ", а сумма DEF = " + sumRightHalf);
         } else {
             System.out.println("Число " + luckyNum + " не является счастливым \n" + 
-                    "Сумма цифр ABC = " + sumDigitsTestNum1 + ", а сумма DEF = " + sumDigitsTestNum2);
+                    "Сумма цифр ABC = " + sumLeftHalf + ", а сумма DEF = " + sumRightHalf);
         }
 
         System.out.println("\n10. Отображение таблицы умножения Пифагора");

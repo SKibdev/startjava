@@ -14,7 +14,14 @@ public class JaegerTest {
         jaeger1.setNumberPilots(3);
         Jaeger jaeger2 = new Jaeger("Cherno Alpha", "Mark-1", "Russia", 85.34f, 2.412f, 
                 3, 10, 10, "Stun Core 08", 2);
-        System.out.println("modelName = " + jaeger1.getModelName());
+        System.out.println("modelName " + jaeger1.getModelName() + "\nMark " + jaeger1.getMark() +
+                "\nOrigin " + jaeger1.getOrigin() + "\nHeight " + jaeger1.getHeight() + 
+                "\nWeight " + jaeger1.getWeight() + "\nSpeed " + jaeger1.getSpeed() + 
+                "\nStrength" + jaeger1.getStrength() + "\nArmor" + jaeger1.getArmor() + 
+                "\nEnergy Core " + jaeger1.getEnergyCore() + 
+                "\nNumber Pilots " + jaeger1.getNumberPilots());
+        jaeger1.displayInfo();
+        jaeger2.displayInfo();
         System.out.println("modelName = " + jaeger2.getModelName());
         // jaegerOne.setModelName("");
         // System.out.println("modelName = " + jaegerOne.getModelName());

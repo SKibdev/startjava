@@ -108,6 +108,19 @@ public class Jaeger {
         this.numberPilots = numberPilots;
     }
 
+    public void displayInfo() {
+        System.out.println("\nmodelName " + getModelName() + 
+                "\nMark " + this.getMark() + 
+                "\nOrigin " + this.getOrigin() + 
+                "\nHeight " + this.getHeight() + 
+                "\nWeight " + this.getWeight() + 
+                "\nSpeed " + this.getSpeed() + 
+                "\nStrength" + this.getStrength() + 
+                "\nArmor" + this.getArmor() + 
+                "\nEnergy Core " + this.getEnergyCore() + 
+                "\nNumber Pilots " + this.getNumberPilots());
+    }
+
     public boolean drift() {
         System.out.println("Вы вошли в дрифт");
         return true;

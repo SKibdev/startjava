@@ -12,27 +12,28 @@ public class JaegerTest {
         jaeger1.setArmor(6);
         jaeger1.setEnergyCore("Arc-9 reactor (analog)");
         jaeger1.setNumberPilots(3);
-        Jaeger jaeger2 = new Jaeger("Cherno Alpha", "Mark-1", "Russia", 85.34f, 2.412f, 
-                3, 10, 10, "Stun Core 08", 2);
-        System.out.println("modelName " + jaeger1.getModelName() + "\nMark " + jaeger1.getMark() +
+        jaeger1.displayInfo();
+        jaeger1.drift();
+        jaeger1.setStrength(10);
+        System.out.println(jaeger1.scanKaiju());
+        jaeger1.executePowerMove("Elbow Rocket");
+        jaeger1.setModelName("Copy Gipsy Danger");
+        System.out.println("\nmodel Name " + jaeger1.getModelName() + "\nMark " + jaeger1.getMark() +
                 "\nOrigin " + jaeger1.getOrigin() + "\nHeight " + jaeger1.getHeight() + 
                 "\nWeight " + jaeger1.getWeight() + "\nSpeed " + jaeger1.getSpeed() + 
-                "\nStrength" + jaeger1.getStrength() + "\nArmor" + jaeger1.getArmor() + 
+                "\nStrength " + jaeger1.getStrength() + "\nArmor " + jaeger1.getArmor() + 
                 "\nEnergy Core " + jaeger1.getEnergyCore() + 
                 "\nNumber Pilots " + jaeger1.getNumberPilots());
-        jaeger1.displayInfo();
-        jaeger2.displayInfo();
-        System.out.println("modelName = " + jaeger2.getModelName());
-        // jaegerOne.setModelName("");
-        // System.out.println("modelName = " + jaegerOne.getModelName());
-        // jaegerOne.setModelName("Java");
-        // System.out.println("modelName = " + jaegerOne.getModelName());
-        // System.out.println("height = " + jaegerOne.height);
-        // jaegerOne.height = -1f;
-        // System.out.println("height = " + jaegerOne.height);
-        // System.out.println("mark = " + jaegerOne.mark);
-        // System.out.println("speed = " + jaegerOne.speed);
-        // System.out.println(jaegerOne.drift());
 
+        Jaeger jaeger2 = new Jaeger("Cherno Alpha", "Mark-1", "Russia", 85.34f, 2.412f, 
+                3, 10, 10, "Stun Core 08", 2);
+        jaeger2.displayInfo();
+        jaeger2.drift();
+        System.out.println(jaeger2.scanKaiju());
+        jaeger2.executePowerMove("Sluggernaut");
+        jaeger2.move();
+        jaeger2.setOrigin("USA");
+        System.out.println("Измененная информация о " + jaeger2.getModelName() + "\nOrigin: " + 
+                jaeger2.getOrigin());
     }
 }

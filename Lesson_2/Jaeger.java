@@ -109,32 +109,34 @@ public class Jaeger {
     }
 
     public void displayInfo() {
-        System.out.println("\nmodelName " + getModelName() + 
-                "\nMark " + this.getMark() + 
-                "\nOrigin " + this.getOrigin() + 
-                "\nHeight " + this.getHeight() + 
-                "\nWeight " + this.getWeight() + 
-                "\nSpeed " + this.getSpeed() + 
-                "\nStrength" + this.getStrength() + 
-                "\nArmor" + this.getArmor() + 
-                "\nEnergy Core " + this.getEnergyCore() + 
-                "\nNumber Pilots " + this.getNumberPilots());
+        System.out.println("\n  Информация о Jaeger\nmodel Name: " + modelName + 
+                "\nMark: " + mark + 
+                "\nOrigin: " + origin + 
+                "\nHeight: " + height + 
+                "\nWeight: " + weight + 
+                "\nSpeed: " + speed + 
+                "\nStrength: " + strength + 
+                "\nArmor: " + armor + 
+                "\nEnergy Core: " + energyCore + 
+                "\nNumber Pilots: " + numberPilots);
     }
 
     public boolean drift() {
-        System.out.println("Вы вошли в дрифт");
+        System.out.println("\nПилоты " + modelName + " вошли в дрифт");
         return true;
     }
 
     public void move() {
-        System.out.println("Вы прошли 5 шагов");
+        System.out.println(modelName + " прошел 5 шагов");
     }
 
     public String scanKaiju() {
-        return "nothing";
+        return modelName + " провел сканирование - Kaiju не найдены";
     }
 
+    // Power Move(s) Gipsy Danger: Palm grip backlash or Elbow Rocket;
+    //  Power Move(s) Cherno Alpha: Sluggernaut or Headshock
     public void executePowerMove(String powerMove) {
-        System.out.println("powerMove");
+        System.out.println(modelName + " применил силовой прием " + powerMove);
     }
 }

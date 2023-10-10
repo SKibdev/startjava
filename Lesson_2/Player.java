@@ -31,5 +31,4 @@ public class Player {
     public boolean isWinner() {
         return winner;
     }
-
 }

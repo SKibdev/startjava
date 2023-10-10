@@ -23,11 +23,11 @@ public class GuessNumberTest {
             GuessNumber guessNumber = new GuessNumber(player1, player2);
             guessNumber.executGame();
             do {
-                // input.nextLine();
                 System.out.println("Хотите продолжить игру? [yes/no]: ");
                 answer = input.nextLine();
             } while (!answer.equals("yes") && !answer.equals("no"));
         } while (!answer.equals("no"));
-        // input.close();
+        
+        input.close();
     }
 }

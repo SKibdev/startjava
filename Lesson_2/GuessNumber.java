@@ -4,7 +4,6 @@ public class GuessNumber {
 
     private Player player1;
     private Player player2;
-    //private Player instancePlayer;
     private int mysteryNumber;
 
     public GuessNumber(Player player1, Player player2) {
@@ -29,14 +28,14 @@ public class GuessNumber {
 
     private void playRound(Player instancePlayer) {
         Scanner input = new Scanner(System.in);
-
-// instancePlayer.getName() не выводит русские буквы почему-то??
-        String playerName = instancePlayer.getName();
-        System.out.printf("%s \nвведите целое число в полуинтервале (0, 100]: ", playerName); 
+        // instancePlayer.getName() не  выводит русские буквы в консоль! почему??
+        System.out.println("\nвведите целое число в полуинтервале (0, 100]: " 
+                + instancePlayer.getName()); 
         instancePlayer.setNumber(input.nextInt());
         int playerNumber = instancePlayer.getNumber();
+        
         if (playerNumber <= 0 || playerNumber > 100) {
-            System.out.println("Переход хода!Необходимо вводить число в полуинтервале (0, 100]: ");
+            System.out.println("Переход хода!Необходимо вводить число в полуинтервале (0, 100]! ");
         } else if (playerNumber < mysteryNumber) {
             System.out.println("Число " + playerNumber + " меньше того, что загадал компьютер");
         } else if (playerNumber > mysteryNumber) {

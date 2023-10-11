@@ -1,9 +1,8 @@
 public class Calculator {
 
-    private int num1 = 0;
-    private int num2 = 0 ;
-    private char sign = ' ';
-    private int result = 1;
+    private int num1;
+    private int num2;
+    private char sign;
     private boolean isError = false;
 
     public void setNum1(int num1) {
@@ -11,6 +10,15 @@ public class Calculator {
             this.num1 = num1;
         } else {
             System.out.println("Ошибка! Первое число должно быть положительным ");
+            isError = true;
+        }
+    }
+
+    public void setNum2(int num2) {
+        if (num2 > 0) {
+            this.num2 = num2;
+        } else {
+            System.out.println("Ошибка! Второе число должно быть положительным ");
             isError = true;
         }
     }
@@ -26,17 +34,9 @@ public class Calculator {
         }
     }
 
-    public void setNum2(int num2) {
-        if (num2 > 0) {
-            this.num2 = num2;
-        } else {
-            System.out.println("Ошибка! Второе число должно быть положительным ");
-            isError = true;
-        }
-    }
-
     public void calculate() {
         if (!isError) {
+            int result = 1;
             switch(sign) {
                 case '+':
                     result = num1 + num2;
@@ -58,7 +58,9 @@ public class Calculator {
                         result *= num1;
                     }
             }
-                System.out.println(num1 + " " + sign + " " + num2 + " = " + result);
+            System.out.println(num1 + " " + sign + " " + num2 + " = " + result);
+        } else {
+            isError = false;
         }
     }
 }

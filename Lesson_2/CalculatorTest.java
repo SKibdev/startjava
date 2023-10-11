@@ -1,36 +1,32 @@
 import java.util.Scanner;
 
 public  class CalculatorTest {
-    
-    public static void main(String[] args) {
 
-        Scanner input = new Scanner(System.in);
-        int num1 = 0;
-        char sign;
-        int num2 = 0;
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
         Calculator calculatorOne = new Calculator();
-        String answer = "";
+        String answer;
 
         do {
             System.out.println("Введите первое число: ");
-            num1 = input.nextInt();
-            System.out.println("Введите знак математической операции (+, -, *, /, ^, %): ");
-            sign = input.next().charAt(0);
-            System.out.println("Введите второе число: ");
-            num2 = input.nextInt();
+            int num1 = console.nextInt();
             calculatorOne.setNum1(num1);
+            System.out.println("Введите знак математической операции (+, -, *, /, ^, %): ");
+            char sign = console.next().charAt(0);
             calculatorOne.setSign(sign);
+            System.out.println("Введите второе число: ");
+            int num2 = console.nextInt();
             calculatorOne.setNum2(num2);
-            // Проблема в input.nextInt() методе; он читает только значение int. Поэтому, 
-            // когда вы продолжите чтение, input.nextLine()вы получите клавишу Enter «\n». 
-            // Поэтому, чтобы пропустить это, вам нужно добавить input.nextLine()
-            input.nextLine();
+            // Проблема в console.nextInt() методе; он читает только значение int. Поэтому, 
+            // когда вы продолжите чтение, console.nextLine()вы получите клавишу Enter «\n». 
+            // Поэтому, чтобы пропустить это, вам нужно добавить console.nextLine()
+            console.nextLine();
             calculatorOne.calculate();
             do {
                 System.out.println("Хотите продолжить вычисления? [yes/no]: ");
-                answer = input.nextLine();
+                answer = console.nextLine();
             } while (!answer.equals("yes") && !answer.equals("no"));
         } while (!answer.equals("no"));
-        input.close();
+        console.close();
     }
 }

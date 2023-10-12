@@ -11,38 +11,35 @@ public class GuessNumber {
         this.player2 = player2;
     }
 
-    public void executGame() {
+    public void start() {
         mysteryNumber = (int) ((Math.random() * 100) + 1);
-        do {
-            playRound(player1);
-            if (player1.isWinner()) {
-                break;
-            } else {
-            playRound(player2);
-            }
+        boolean winner = false;
+        while(!winner) {
+            winner = playRound(player1) ? true : playRound(player2);
         }
-        while (!player1.isWinner() && !player2.isWinner());
-        player1.setWinner(false);
-        player2.setWinner(false);
     }
 
-    private void playRound(Player instancePlayer) {
-        Scanner input = new Scanner(System.in);
-        // instancePlayer.getName() не  выводит русские буквы в консоль! почему??
-        System.out.println(instancePlayer.getName() + 
+    private int enterNumber(Player player) {
+        Scanner console = new Scanner(System.in);
+        System.out.println(player.getName() + 
                 "\nвведите целое число в полуинтервале (0, 100]: ");
-        instancePlayer.setNumber(input.nextInt());
-        int playerNumber = instancePlayer.getNumber();
+        player.setNumber(console.nextInt());
+        return player.getNumber();
+    }
+
+    private boolean playRound(Player player) {
+        int playerNumber = enterNumber(player);
 
         if (playerNumber <= 0 || playerNumber > 100) {
-            System.out.println("Переход хода!Необходимо вводить число в полуинтервале (0, 100]! ");
+            System.out.println("Переход хода!Необходимо вводить число в полуинтервале (0, 100]!\n");
         } else if (playerNumber < mysteryNumber) {
-            System.out.println("Число " + playerNumber + " меньше того, что загадал компьютер");
+            System.out.println("Число " + playerNumber + " меньше того, что загадал компьютер\n");
         } else if (playerNumber > mysteryNumber) {
-            System.out.println("Число " + playerNumber + " больше того, что загадал компьютер");
+            System.out.println("Число " + playerNumber + " больше того, что загадал компьютер\n");
         } else {
-            instancePlayer.setWinner(true);
-            System.out.println(instancePlayer.getName() + " победил!!!");
+            System.out.println(player.getName() + " победил!!!\n");
+            return true;
         }
+        return false;
     }
 }

@@ -3,7 +3,7 @@ public class Calculator {
     private int num1;
     private int num2;
     private char sign;
-    private boolean isError = false;
+    private boolean isError;
 
     public void setNum1(int num1) {
         if (num1 > 0) {

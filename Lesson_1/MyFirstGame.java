@@ -1,4 +1,5 @@
 public class MyFirstGame {
+
     public static void main(String[] args) {
         // Целое число в полуинтервале (0, 100]
         int mysteryNum = 10;

@@ -139,4 +139,14 @@ public class Jaeger {
     public void executePowerMove(String powerMove) {
         System.out.println(modelName + " применил силовой прием " + powerMove);
     }
+
+@Override
+    public String toString() {
+        return "Main{" + 
+            "model Name:'" + modelName + '\'' +
+            ", Mark: " + mark + '\'' +
+            " Height: " + height + 
+            "weight: " + weight + 
+            '}';
+    }
 }

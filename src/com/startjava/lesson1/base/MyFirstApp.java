@@ -1,4 +1,4 @@
-package com.startjava.lesson_1.base;
+package com.startjava.lesson1.base;
 
 import java.nio.charset.Charset;
 import java.util.Scanner;

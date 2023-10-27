@@ -1,4 +1,4 @@
-package com.startjava.lesson2_3.guess;
+package com.startjava.lesson2_3_4.guess;
 
 import java.util.Scanner;
 
@@ -6,7 +6,8 @@ public class GuessNumberTest {
     
     public static void main(String[] args) {
         String answer = "";
-        Scanner input = new Scanner(System.in, "cp866");
+        // Если в терминале не отображается кирилица, то енобхлдимо добавить "cp866": Scanner(System.in, "cp866")
+        Scanner input = new Scanner(System.in);
 
         System.out.println("\n    Добро пожаловать в игру УГАДАЙ ЧИСЛО \n\nКРАТКИЕ ПРАВИЛА" + 
                 "\n\n1. В игре участвуют два игрока, которые по очереди будут пытаться угадать " + 

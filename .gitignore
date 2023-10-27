@@ -2,3 +2,5 @@ out/
 *.class
 options
 optionsj
+.idea/
+StartJava.iml

@@ -1,5 +1,7 @@
 package com.startjava.lesson_2_3_4.array;
 
+import java.util.Arrays;
+
 public class ArraysTheme {
     public static void main(String[] args) {
         int length;
@@ -64,20 +66,45 @@ public class ArraysTheme {
         System.out.println("\n4.Вывод алфавита лесенкой");
         char[] letters = new char[26];
         length = letters.length;
-        int i = 0;
+        int k = 0;
         for (char ch = 'A'; ch <= 'Z'; ch++) {
-            letters[i++] = ch;
+            letters[k++] = ch;
         }
-
-        for (i = length - 1; i > 0; i--) {
-            System.out.print(letters[i]);
+        for (int i =  length - 2; i >= -1; --i) {
+            for (int j = length - 1; j > i; --j) {
+                System.out.print(letters[j]);
+            }
+            System.out.println();
         }
 
         System.out.println("\n5.Заполнение массива уникальными числами");
+        int[] numbers3 = new int[30];
+        length = numbers3.length;
 
-
+        for (int i = 0; i <= length-1; i++) {
+            numbers3[i] = (int) (Math.random() * 40 + 60);
+            int number3 = 0;
+            while (number3 < i) {
+                if (numbers3[i] == numbers3[number3]) {
+                    numbers3[i] = (int) (Math.random() * 40 + 60);
+                    number3 = -1;
+                }
+                number3++;
+            }
+        }
+        for (int number3 : numbers3) {
+            System.out.print(number3 + " ");
+        }
+        System.out.println();
+        int[] DDD = {2,5,3,1,4};
+        sortBubble(DDD);
+        System.out.println(Arrays.toString(DDD));
+        sortBubble(numbers3);
+        for (int number3 : numbers3) {
+            System.out.print(number3 + " ");
+        }
     }
-    private static void displayNumbers (int[] numbers) {
+    private static void displayNumbers(int[] numbers) {
         for (int i = 0; i <= numbers.length-1; i++) {
             if (i == 0) {
                 System.out.print("[" + numbers[i] + ",");
@@ -89,7 +116,7 @@ public class ArraysTheme {
         }
      }
 
-    private static void displayNumbers2 (double[] numbers2) {
+    private static void displayNumbers2(double[] numbers2) {
         for (int i = 0; i <= numbers2.length - 1; i++) {
             if (i == 7) {
                 System.out.printf("%.3f \n", numbers2[i]);
@@ -97,6 +124,20 @@ public class ArraysTheme {
                 System.out.printf("%.3f ", numbers2[i]);
             }
         }
+    }
+
+    private static int[] sortBubble(int[] array) {
+        for (int i =  array.length -1; i > 0; i--) {
+            for (int j = i; j > 0; j--) {
+                if (array[j] < array[j - 1]) {
+                    int temporary = array[j];
+                    array[j] = array[j - 1];
+                    array[j - 1] = temporary;
+                }
+            }
+
+        }
+        return array;
     }
 
 }

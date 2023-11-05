@@ -3,10 +3,10 @@ package com.startjava.lesson_2_3_4.array;
 public class ArraysTheme {
     public static void main(String[] args) {
         reverse();
-        multiplicate();
+        multiply();
         deleteElements();
         displayAlphabetLadder();
-        fillUniqueNumbers();
+        fillUniqueNums();
     }
 
     public static void reverse() {
@@ -29,16 +29,16 @@ public class ArraysTheme {
         display(reverseNums);
     }
 
-    private static void display(int[] numbers) {
-        int length = numbers.length;
+    private static void display(int[] reverseNums) {
+        int length = reverseNums.length;
         System.out.print("[");
-        for (int i = 0; i < length; i++) {
-            System.out.print(numbers[i] + ", ");
+        for (int i = 0; i < length - 1; i++) {
+            System.out.print(reverseNums[i] + ", ");
         }
-        System.out.print(numbers[length - 1] +  "]\n");
+        System.out.print(reverseNums[length - 1] +  "]\n");
     }
 
-    public static void multiplicate() {
+    public static void multiply() {
         System.out.println("\n2. Произведение элементов массива");
 
         int[] multipliedNums = new int[10];
@@ -57,39 +57,38 @@ public class ArraysTheme {
     public static void deleteElements() {
         System.out.println("\n\n3. Удаление элементов массива");
 
-        double[] numbers2 = new double[15];
-        int length = numbers2.length;
+        double[] nums = new double[15];
+        int length = nums.length;
         for (int i = 0; i < length; i++) {
-            numbers2[i] = Math.random();
+            nums[i] = Math.random();
         }
 
         System.out.println("Исходный массив:");
-        displayNumbers2(numbers2);
+        display(nums);
 
-        double middle = numbers2[length/2];
-        int counter = 0;
+        double middle = nums[length / 2];
+        int numberZeroedCells = 0;
         for (int i = 0; i < length; i++) {
-            if (numbers2[i] > middle) {
-                numbers2[i] = 0;
-                counter++;
+            if (nums[i] > middle) {
+                nums[i] = 0;
+                numberZeroedCells++;
             }
         }
 
         System.out.println("\nИзмененный массив:");
-        displayNumbers2(numbers2);
+        display(nums);
 
-        System.out.println("\nКоличество обнуленных ячеек = " + counter);
+        System.out.println("\nКоличество обнуленных ячеек = " + numberZeroedCells);
     }
 
-    private static void displayNumbers2(double[] numbers2) {
+    private static void display(double[] nums) {
         int i = 0;
-        for (double number : numbers2) {
-            if (i == 7) {
-                System.out.printf("%.3f \n", number);
-            } else {
-                System.out.printf("%.3f ", number);
-            }
+        for (double num : nums) {
+            System.out.printf("%.3f ", num);
             i++;
+            if (i == 8) {
+                System.out.println();
+            }
         }
     }
 
@@ -111,28 +110,28 @@ public class ArraysTheme {
         }
     }
 
-    public static void fillUniqueNumbers() {
+    public static void fillUniqueNums() {
         System.out.println("\n5.Заполнение массива уникальными числами");
 
-        int[] numbers3 = new int[30];
-        int length = numbers3.length;
+        int[] uniqueNums = new int[30];
+        int length = uniqueNums.length;
 
         for (int i = 0; i < length; i++) {
-            numbers3[i] = (int) (Math.random() * 40 + 60);
+            uniqueNums[i] = (int) (Math.random() * 40 + 60);
             int index = 0;
             while (index < i) {
-                if (numbers3[i] == numbers3[index]) {
-                    numbers3[i] = (int) (Math.random() * 40 + 60);
+                if (uniqueNums[i] == uniqueNums[index]) {
+                    uniqueNums[i] = (int) (Math.random() * 40 + 60);
                     index = -1;
                 }
                 index++;
             }
         }
 
-        sortBubble(numbers3);
+        sortBubble(uniqueNums);
 
         for (int i = 0; i < length; i++) {
-            System.out.print(numbers3[i] + " ");
+            System.out.print(uniqueNums[i] + " ");
             if ((i - 9) % 10 == 0) {
                 System.out.println();
             }

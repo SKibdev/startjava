@@ -2,10 +2,19 @@ package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
 
+    private String[] mathExpression;
     private int num1;
     private int num2;
     private char sign;
     private boolean isError;
+
+    public String[] getMathExpression() {
+        return mathExpression;
+    }
+
+    public void setMathExpression(String[] mathExpression) {
+        this.mathExpression = mathExpression;
+    }
 
     public void setNum1(int num1) {
         if (num1 > 0) {

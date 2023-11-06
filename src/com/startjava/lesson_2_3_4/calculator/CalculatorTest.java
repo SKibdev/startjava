@@ -10,22 +10,17 @@ public  class CalculatorTest {
         String answer;
 
         do {
-            System.out.println("Введите первое число: ");
-            int num1 = console.nextInt();
-            calculatorOne.setNum1(num1);
+            System.out.print ("Добро пожаловать в программу КАЛЬКУЛЯТОР \n" +
+                    "возможные математические операции \"+, -, *, /, ^, %\" \n\n" +
+                    "Введите математическое выражение в формате \"А + В\": ");
 
-            System.out.println("Введите знак математической операции (+, -, *, /, ^, %): ");
-            char sign = console.next().charAt(0);
-            calculatorOne.setSign(sign);
+            String[] mathExpression = (console.nextLine().split(" "));
+            calculatorOne.setMathExpression(mathExpression);
 
-            System.out.println("Введите второе число: ");
-            int num2 = console.nextInt();
-            calculatorOne.setNum2(num2);
-
-            // Проблема в console.nextInt() методе; он читает только значение int. Поэтому, 
+            // Проблема в console.nextInt() методе; он читает только значение int. Поэтому,
             // когда вы продолжите чтение, console.nextLine()вы получите клавишу Enter «\n». 
             // Поэтому, чтобы пропустить это, вам нужно добавить console.nextLine()
-            console.nextLine();
+         //   console.nextLine();
             
             calculatorOne.calculate();
             do {

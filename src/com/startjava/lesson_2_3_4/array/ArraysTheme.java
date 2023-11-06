@@ -20,9 +20,8 @@ public class ArraysTheme {
 
         for (int i = 0; i < length; i++) {
             int tmp = reverseNums[i];
-            reverseNums[i] = reverseNums[length - 1];
-            reverseNums[length - 1] = tmp;
-            length--;
+            reverseNums[i] = reverseNums[--length];
+            reverseNums[length] = tmp;
         }
 
         System.out.print("После реверса: ");
@@ -41,42 +40,42 @@ public class ArraysTheme {
     public static void multiply() {
         System.out.println("\n2. Произведение элементов массива");
 
-        int[] multipliedNums = new int[10];
-        int length = multipliedNums.length;
+        int[] multipliers = new int[10];
+        int length = multipliers.length;
         for (int i = 0; i < length; i++) {
-            multipliedNums[i] = i;
+            multipliers[i] = i;
         }
 
-        int multiplication = 1;
+        int result = 1;
         for (int i = 1; i < length - 1; i++) {
-            multiplication *= multipliedNums[i];
-            System.out.print(multipliedNums[i] + (i != length - 2 ? (" * ") : (" = " + multiplication)));
+            result *= multipliers[i];
+            System.out.print(multipliers[i] + (i != length - 2 ? (" * ") : (" = " + result)));
         }
     }
 
     public static void deleteElements() {
         System.out.println("\n\n3. Удаление элементов массива");
 
-        double[] nums = new double[15];
-        int length = nums.length;
+        double[] randomNums = new double[15];
+        int length = randomNums.length;
         for (int i = 0; i < length; i++) {
-            nums[i] = Math.random();
+            randomNums[i] = Math.random();
         }
 
         System.out.println("Исходный массив:");
-        display(nums);
+        display(randomNums);
 
-        double middle = nums[length / 2];
+        double middle = randomNums[length / 2];
         int numberZeroedCells = 0;
         for (int i = 0; i < length; i++) {
-            if (nums[i] > middle) {
-                nums[i] = 0;
+            if (randomNums[i] > middle) {
+                randomNums[i] = 0;
                 numberZeroedCells++;
             }
         }
 
         System.out.println("\nИзмененный массив:");
-        display(nums);
+        display(randomNums);
 
         System.out.println("\nКоличество обнуленных ячеек = " + numberZeroedCells);
     }
@@ -113,19 +112,21 @@ public class ArraysTheme {
     public static void fillUniqueNums() {
         System.out.println("\n5.Заполнение массива уникальными числами");
 
+        int uniqueNum;
         int[] uniqueNums = new int[30];
         int length = uniqueNums.length;
 
         for (int i = 0; i < length; i++) {
-            uniqueNums[i] = (int) (Math.random() * 40 + 60);
+            uniqueNum = (int) (Math.random() * 40 + 60);
             int index = 0;
             while (index < i) {
-                if (uniqueNums[i] == uniqueNums[index]) {
-                    uniqueNums[i] = (int) (Math.random() * 40 + 60);
+                if (uniqueNum == uniqueNums[index]) {
+                    uniqueNum = (int) (Math.random() * 40 + 60);
                     index = -1;
                 }
                 index++;
             }
+            uniqueNums[i] = uniqueNum;
         }
 
         sortBubble(uniqueNums);

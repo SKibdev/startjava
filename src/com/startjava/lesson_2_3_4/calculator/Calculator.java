@@ -1,77 +1,40 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import static java.lang.Math.pow;
+
 public class Calculator {
 
-    private String[] mathExpression;
     private int num1;
     private int num2;
     private char sign;
-    private boolean isError;
 
-    public String[] getMathExpression() {
-        return mathExpression;
-    }
-
-    public void setMathExpression(String[] mathExpression) {
-        this.mathExpression = mathExpression;
-    }
-
-    public void setNum1(int num1) {
-        if (num1 > 0) {
-            this.num1 = num1;
-        } else {
-            System.out.println("Ошибка! Первое число должно быть положительным ");
-            isError = true;
-        }
-    }
-
-    public void setNum2(int num2) {
-        if (num2 > 0) {
-            this.num2 = num2;
-        } else {
-            System.out.println("Ошибка! Второе число должно быть положительным ");
-            isError = true;
-        }
-    }
-
-    public void setSign(char sign) {
-        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' || 
-                sign == '^' || sign == '%';
-        if (isSign) {
-            this.sign = sign;
-        } else {
-            System.out.println("Ошибка! Введите одну из допустимых операций +, -, *, /, ^, % ");
-            isError = true;
-        }
-    }
-
-    public void calculate() {
-        if (!isError) {
-            int result = 1;
-            switch(sign) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    result = num1 / num2;
-                    break;
-                case '%':
-                    result = num1 % num2;
-                    break;
-                case '^':
-                    for (int i = 1; i <= num2; i++) {
-                        result *= num1;
-                    }
+    public double calculate(String mathExpression) {
+        double result = Double.MIN_VALUE;
+        if (isMathExpressionCorrectly(mathExpression)) {
+            switch (sign) {
+                case '+' -> result = num1 + num2;
+                case '-' -> result = num1 - num2;
+                case '*' -> result = num1 * num2;
+                case '/' -> result = (double) num1 / (double) num2;
+                case '%' -> result = num1 % num2;
+                case '^' -> result *= pow(num1, num2);
             }
-            System.out.println(num1 + " " + sign + " " + num2 + " = " + result);
-        } else {
-            isError = false;
+            return result;
         }
+        return result;
+    }
+
+    private boolean isMathExpressionCorrectly(String mathExpression) {
+        String[] mathExpressions = mathExpression.split(" ");
+        sign = mathExpressions[1].charAt(0);
+        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' ||
+                sign == '^' || sign == '%';
+        if (!isSign) {
+            System.out.println("Ошибка: знак " + sign + " не поддерживается");
+            return false;
+        }
+        num1 = Integer.parseInt(mathExpressions[0]);
+        num2 = Integer.parseInt(mathExpressions[2]);
+        return true;
     }
 }

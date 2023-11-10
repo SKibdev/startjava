@@ -3,39 +3,45 @@ package com.startjava.lesson_2_3_4.calculator;
 import java.util.Scanner;
 
 public  class CalculatorTest {
-    public static void main(String[] args) {
-        Scanner console = new Scanner(System.in);
-        Calculator calculator = new Calculator();
 
+    static String mathExpression;
+    static Scanner console = new Scanner(System.in);
+    static Calculator calculator = new Calculator();
+    static String answer;
+
+
+    public static void main(String[] args) {
         do {
-            System.out.print ("""
+            System.out.print("""
 
                         Добро пожаловать в программу КАЛЬКУЛЯТОР\s
                     возможные математические операции "+, -, *, /, ^, %"\s
 
                     Введите математическое выражение в формате "А + В":\s""");
+            mathExpression = console.nextLine();
 
-            String mathExpression = console.nextLine();
-
-            System.out.print(mathExpression + " = ");
-            double result = calculator.calculate(mathExpression);
-            if (result != Double.MIN_VALUE) {
-                if ((result == (long) result)) {
-                    System.out.printf("%.0f", result);
-                } else {
-                    System.out.printf("%.3f",  result);
-                }
-            }
-        } while (isContinueCalculations());
+            showResult();
+        } while (isNext());
         console.close();
     }
 
-    private static boolean isContinueCalculations() {
-        Scanner console = new Scanner(System.in);
+    private static void showResult() {
+        System.out.print(mathExpression + " = ");
+        double result = calculator.calculate(mathExpression);
+        if (result != Double.MIN_VALUE) {
+            if ((result == (int) result)) {
+                System.out.printf("%.0f", result);
+            } else {
+                System.out.printf("%.3f", result);
+            }
+        }
+    }
+
+    private static boolean isNext() {
         System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
-        String answer = console.nextLine();
+        answer = console.nextLine();
         if (!answer.equals("yes") && !answer.equals("no")) {
-            isContinueCalculations();
+            isNext();
         }
         return (answer.equals("yes"));
     }

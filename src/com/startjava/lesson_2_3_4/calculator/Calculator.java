@@ -1,6 +1,6 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-import static java.lang.Math.pow;
+import java.lang.Math;
 
 public class Calculator {
 
@@ -10,31 +10,25 @@ public class Calculator {
 
     public double calculate(String mathExpression) {
         double result = Double.MIN_VALUE;
-        if (isMathExpressionCorrectly(mathExpression)) {
-            switch (sign) {
-                case '+' -> result = num1 + num2;
-                case '-' -> result = num1 - num2;
-                case '*' -> result = num1 * num2;
-                case '/' -> result = (double) num1 / (double) num2;
-                case '%' -> result = num1 % num2;
-                case '^' -> result *= pow(num1, num2);
-            }
-            return result;
-        }
-        return result;
+        convert(mathExpression);
+            return switch (sign) {
+                case '+' -> num1 + num2;
+                case '-' -> num1 - num2;
+                case '*' -> num1 * num2;
+                case '/' -> (double) num1 / (double) num2;
+                case '%' -> num1 % num2;
+                case '^' -> Math.pow(num1, num2);
+                default -> {
+                    System.out.println("Ошибка: знак " + sign + " не поддерживается");
+                    yield result;
+                }
+            };
     }
 
-    private boolean isMathExpressionCorrectly(String mathExpression) {
-        String[] mathExpressions = mathExpression.split(" ");
-        sign = mathExpressions[1].charAt(0);
-        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' ||
-                sign == '^' || sign == '%';
-        if (!isSign) {
-            System.out.println("Ошибка: знак " + sign + " не поддерживается");
-            return false;
-        }
-        num1 = Integer.parseInt(mathExpressions[0]);
-        num2 = Integer.parseInt(mathExpressions[2]);
-        return true;
+    private void convert(String mathExpression) {
+        String[] elements = mathExpression.split(" ");
+        sign = elements[1].charAt(0);
+        num1 = Integer.parseInt(elements[0]);
+        num2 = Integer.parseInt(elements[2]);
     }
 }

@@ -4,30 +4,31 @@ import java.util.Scanner;
 
 public  class CalculatorTest {
 
-    static String mathExpression;
     static Scanner console = new Scanner(System.in);
     static Calculator calculator = new Calculator();
-    static String answer;
-
 
     public static void main(String[] args) {
-        do {
+        String answer = "yes";
+        while (answer.equals("yes")) {
             System.out.print("""
 
                         Добро пожаловать в программу КАЛЬКУЛЯТОР\s
                     возможные математические операции "+, -, *, /, ^, %"\s
 
                     Введите математическое выражение в формате "А + В":\s""");
-            mathExpression = console.nextLine();
+            String mathExpression = console.nextLine();
+            double result = calculator.calculate(mathExpression);
 
-            showResult();
-        } while (isNext());
+            showResult(mathExpression, result);
+            answer = isNext();
+        }
+        System.out.println("Калькулятор закрылся!!!");
         console.close();
     }
 
-    private static void showResult() {
+    private static void showResult(String mathExpression, double result) {
         System.out.print(mathExpression + " = ");
-        double result = calculator.calculate(mathExpression);
+
         if (result != Double.MIN_VALUE) {
             if ((result == (int) result)) {
                 System.out.printf("%.0f", result);
@@ -37,12 +38,12 @@ public  class CalculatorTest {
         }
     }
 
-    private static boolean isNext() {
+    private static String isNext() {
         System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
-        answer = console.nextLine();
+        String answer = console.nextLine();
         if (!answer.equals("yes") && !answer.equals("no")) {
-            isNext();
+            answer = isNext();
         }
-        return (answer.equals("yes"));
+        return answer;
     }
 }

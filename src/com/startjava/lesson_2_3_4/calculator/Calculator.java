@@ -9,23 +9,22 @@ public class Calculator {
     private char sign;
 
     public double calculate(String mathExpression) {
-        double result = Double.MIN_VALUE;
-        convert(mathExpression);
-            return switch (sign) {
-                case '+' -> num1 + num2;
-                case '-' -> num1 - num2;
-                case '*' -> num1 * num2;
-                case '/' -> (double) num1 / (double) num2;
-                case '%' -> num1 % num2;
-                case '^' -> Math.pow(num1, num2);
-                default -> {
-                    System.out.println("Ошибка: знак " + sign + " не поддерживается");
-                    yield result;
-                }
-            };
+        parse(mathExpression);
+        return switch (sign) {
+            case '+' -> num1 + num2;
+            case '-' -> num1 - num2;
+            case '*' -> num1 * num2;
+            case '/' -> (double) num1 / num2;
+            case '%' -> num1 % num2;
+            case '^' -> Math.pow(num1, num2);
+            default -> {
+                System.out.println("Ошибка: знак " + sign + " не поддерживается");
+                yield Double.MIN_VALUE;
+            }
+        };
     }
 
-    private void convert(String mathExpression) {
+    private void parse(String mathExpression) {
         String[] elements = mathExpression.split(" ");
         sign = elements[1].charAt(0);
         num1 = Integer.parseInt(elements[0]);

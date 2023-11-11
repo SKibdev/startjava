@@ -3,7 +3,8 @@ package com.startjava.lesson_2_3_4.guess;
 public class Player {
 
     private final String name;
-    private int[] numbers = new int[10];
+    //TO DO new int[10]
+    private int[] numbers = new int[2];
     private int index = -1;
 
     public Player(String name) {

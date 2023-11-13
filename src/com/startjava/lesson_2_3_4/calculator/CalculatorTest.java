@@ -8,20 +8,25 @@ public  class CalculatorTest {
     static Calculator calculator = new Calculator();
 
     public static void main(String[] args) {
-        String answer = "yes";
-        while (answer.equals("yes")) {
-            System.out.print("""
+        String answer ="yes";
+        System.out.println("\n    Добро пожаловать в программу КАЛЬКУЛЯТОР");
 
-                        Добро пожаловать в программу КАЛЬКУЛЯТОР\s
-                    возможные математические операции "+, -, *, /, ^, %"\s
+        while (!answer.equals("no")) {
 
-                    Введите математическое выражение в формате "А + В":\s""");
-            String mathExpression = console.nextLine();
-            double result = calculator.calculate(mathExpression);
+            if (answer.equals("yes")) {
+                System.out.print("""
+                        \nВозможные математические операции "+, -, *, /, ^, %."\s
+                        Введите математическое выражение в формате "А + В":\s""");
+                String mathExpression = console.nextLine();
 
-            showResult(mathExpression, result);
-            answer = isNext();
+                double result = calculator.calculate(mathExpression);
+                showResult(mathExpression, result);
+            }
+
+            System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
+            answer = console.nextLine();
         }
+
         System.out.println("Калькулятор закрылся!!!");
         console.close();
     }
@@ -38,12 +43,4 @@ public  class CalculatorTest {
         }
     }
 
-    private static String isNext() {
-        System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
-        String answer = console.nextLine();
-        if (!answer.equals("yes") && !answer.equals("no")) {
-            answer = isNext();
-        }
-        return answer;
-    }
 }

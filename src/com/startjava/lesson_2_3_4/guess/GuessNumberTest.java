@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GuessNumberTest {
     
     public static void main(String[] args) {
-        String answer;
+        String answer = "yes";
         // Если в терминале не отображается кирилица, то енобхлдимо добавить "cp866": Scanner(System.in, "cp866")
         Scanner input = new Scanner(System.in);
 
@@ -28,15 +28,15 @@ public class GuessNumberTest {
         System.out.println("Введите имя Игрока 2: ");
         String player2 = input.nextLine();
 
-        System.out.println("\nИГРА НАЧАЛАСЬ\n");
-
         do {
-            GuessNumber game = new GuessNumber(player1, player2);
-            game.start();
-            do {
-                System.out.println("Хотите продолжить игру? [yes/no]: ");
-                answer = input.nextLine();
-            } while (!answer.equals("yes") && !answer.equals("no"));
+            if (answer.equals("yes")) {
+                GuessNumber game = new GuessNumber(player1, player2);
+                game.start();
+            }
+
+            System.out.println("\nХотите продолжить игру? [yes/no]: ");
+            answer = input.nextLine();
+
         } while (!answer.equals("no"));
 
         input.close();

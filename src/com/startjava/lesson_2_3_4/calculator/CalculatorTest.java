@@ -12,13 +12,8 @@ public  class CalculatorTest {
         System.out.println("\n    Добро пожаловать в программу КАЛЬКУЛЯТОР");
 
         while (!answer.equals("no")) {
-
             if (answer.equals("yes")) {
-                System.out.print("""
-                        \nВозможные математические операции "+, -, *, /, ^, %."\s
-                        Введите математическое выражение в формате "А + В":\s""");
-                String mathExpression = console.nextLine();
-
+                String mathExpression = enterMathExpression();
                 double result = calculator.calculate(mathExpression);
                 showResult(mathExpression, result);
             }
@@ -29,6 +24,13 @@ public  class CalculatorTest {
 
         System.out.println("Калькулятор закрылся!!!");
         console.close();
+    }
+
+    private static String enterMathExpression() {
+        System.out.print("""
+                        \nВозможные математические операции "+, -, *, /, ^, %."\s
+                        Введите математическое выражение в формате "А + В":\s""");
+        return console.nextLine();
     }
 
     private static void showResult(String mathExpression, double result) {

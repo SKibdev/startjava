@@ -1,6 +1,5 @@
 package com.startjava.lesson_2_3_4.guess;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuessNumber {
@@ -37,8 +36,8 @@ public class GuessNumber {
     }
 
     private boolean playRound(Player player) {
-
         int playerNumber = enterNumber(player);
+
         if (playerNumber <= 0 || playerNumber > 100) {
             System.out.println("Переход хода! Необходимо вводить число в полуинтервале (0, 100]!\n");
         } else if (playerNumber < mysteryNumber) {

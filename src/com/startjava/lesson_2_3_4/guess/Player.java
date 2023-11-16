@@ -20,10 +20,6 @@ public class Player {
         return numbers[attempt - 1];
     }
 
-    public int[] getNumbers() {
-        return numbers;
-    }
-
     public void addNumber(int number) {
         numbers[attempt++] = number;
     }

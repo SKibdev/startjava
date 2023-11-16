@@ -8,7 +8,26 @@ public class GuessNumberTest {
         String answer = "yes";
         // Если в терминале не отображается кирилица, то енобхлдимо добавить "cp866": Scanner(System.in, "cp866")
         Scanner input = new Scanner(System.in);
+        welcome();
+        System.out.println("Введите имя Игрока 1: ");
+        String namePlayer1 = input.nextLine();
+        System.out.println("Введите имя Игрока 2: ");
+        String namePlayer2 = input.nextLine();
 
+        do {
+            if (answer.equals("yes")) {
+                GuessNumber game = new GuessNumber(namePlayer1, namePlayer2);
+                game.start();
+            }
+
+            System.out.println("\nХотите продолжить игру? [yes/no]: ");
+            answer = input.nextLine();
+        } while (!answer.equals("no"));
+
+        input.close();
+    }
+
+    private static void welcome() {
         System.out.println("""
 
                     Добро пожаловать в игру УГАДАЙ ЧИСЛО\s
@@ -22,23 +41,5 @@ public class GuessNumberTest {
                 4. Игра продолжается до тех пор, пока число не будет угадано
                 5. В игре должны использоваться только целые положительные числа в полуинтервале (0, 100]
                 """);
-
-        System.out.println("Введите имя Игрока 1: ");
-        String player1 = input.nextLine();
-        System.out.println("Введите имя Игрока 2: ");
-        String player2 = input.nextLine();
-
-        do {
-            if (answer.equals("yes")) {
-                GuessNumber game = new GuessNumber(player1, player2);
-                game.start();
-            }
-
-            System.out.println("\nХотите продолжить игру? [yes/no]: ");
-            answer = input.nextLine();
-
-        } while (!answer.equals("no"));
-
-        input.close();
     }
 }

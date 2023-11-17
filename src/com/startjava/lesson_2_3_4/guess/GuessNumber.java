@@ -6,7 +6,6 @@ public class GuessNumber {
 
     private Player[] players = new Player[2];
     private int mysteryNumber;
-    private boolean isNext = true;
 
     public GuessNumber(String player1, String player2) {
         players[0] = new Player(player1);
@@ -15,27 +14,29 @@ public class GuessNumber {
 
     public void start() {
         System.out.println("\nИгра началась! У каждого игрока по 10 попыток.\n");
+        boolean isNext = true;
         mysteryNumber = (int) ((Math.random() * 100) + 1);
 
         while (isNext) {
-            for (int i = 0; i < 2; i++) {
-                if (playRound(players[i])) {
+            for (Player player : players) {
+                if (isGuessed(player)) {
                     isNext = false;
                     break;
                 }
-                if (players[i].getAttempt() == 10) {
-                    System.out.println("У " + players[i].getName() + " закончились попытки\n");
+                if (player.getAttempt() == 10) {
+                    System.out.println("У " + player.getName() + " закончились попытки\n");
                     isNext = false;
                 }
             }
         }
 
-        for (int i = 0; i < 2; i++) {
-            players[i].showAttempts();
+        for (Player player : players) {
+            showAttempts(player);
+            player.clearAttempts();
         }
     }
 
-    private boolean playRound(Player player) {
+    private boolean isGuessed(Player player) {
         int playerNumber = enterNumber(player);
 
         if (playerNumber <= 0 || playerNumber > 100) {
@@ -45,7 +46,8 @@ public class GuessNumber {
         } else if (playerNumber > mysteryNumber) {
             System.out.println("Число " + playerNumber + " больше того, что загадал компьютер\n");
         } else {
-            System.out.println("Игрок " + player.getName() + " угадал число " + mysteryNumber + " с " + (player.getAttempt()) + " попытки\n");
+            System.out.println("Игрок " + player.getName() + " угадал число " + mysteryNumber +
+                    " с " + (player.getAttempt()) + " попытки\n");
             return true;
         }
         return false;
@@ -57,5 +59,12 @@ public class GuessNumber {
                 "\nвведите целое число в полуинтервале (0, 100]: ");
         player.addNumber(console.nextInt());
         return player.getNumber();
+    }
+
+    private void showAttempts(Player player) {
+        for (int attempt : player.getAttempts()) {
+            System.out.print(attempt + " ");
+        }
+        System.out.println();
     }
 }

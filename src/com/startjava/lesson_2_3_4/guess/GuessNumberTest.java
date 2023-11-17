@@ -6,9 +6,9 @@ public class GuessNumberTest {
     
     public static void main(String[] args) {
         String answer = "yes";
-        // Если в терминале не отображается кирилица, то енобхлдимо добавить "cp866": Scanner(System.in, "cp866")
+        // Если в терминале не отображается кириллица, то необходимо добавить "cp866": Scanner(System.in, "cp866")
         Scanner input = new Scanner(System.in);
-        welcome();
+        printRules();
         System.out.println("Введите имя Игрока 1: ");
         String namePlayer1 = input.nextLine();
         System.out.println("Введите имя Игрока 2: ");
@@ -27,7 +27,7 @@ public class GuessNumberTest {
         input.close();
     }
 
-    private static void welcome() {
+    private static void printRules() {
         System.out.println("""
 
                     Добро пожаловать в игру УГАДАЙ ЧИСЛО\s

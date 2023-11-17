@@ -34,9 +34,8 @@ public  class CalculatorTest {
     }
 
     private static void showResult(String mathExpression, double result) {
-        System.out.print(mathExpression + " = ");
-
         if (result != Double.MIN_VALUE) {
+            System.out.print(mathExpression + " = ");
             if ((result == (int) result)) {
                 System.out.printf("%.0f", result);
             } else {

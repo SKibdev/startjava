@@ -5,7 +5,6 @@ import java.util.Scanner;
 public  class CalculatorTest {
 
     static Scanner console = new Scanner(System.in);
-    static Calculator calculator = new Calculator();
 
     public static void main(String[] args) {
         String answer ="yes";
@@ -14,8 +13,12 @@ public  class CalculatorTest {
         while (!answer.equals("no")) {
             if (answer.equals("yes")) {
                 String mathExpression = enterMathExpression();
-                double result = calculator.calculate(mathExpression);
-                showResult(mathExpression, result);
+                try {
+                    double result = Calculator.calculate(mathExpression);
+                    showResult(mathExpression, result);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
 
             System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
@@ -28,20 +31,14 @@ public  class CalculatorTest {
 
     private static String enterMathExpression() {
         System.out.print("""
-                        \nВозможные математические операции "+, -, *, /, ^, %."\s
+                        \nВозможные математические операции "+, -, *, /, ^, %."
+                        Опреации производятся только над целыми положительными числами
                         Введите математическое выражение в формате "А + В":\s""");
         return console.nextLine();
     }
 
     private static void showResult(String mathExpression, double result) {
-        if (result != Double.MIN_VALUE) {
-            System.out.print(mathExpression + " = ");
-            if ((result == (int) result)) {
-                System.out.printf("%.0f", result);
-            } else {
-                System.out.printf("%.3f", result);
-            }
-        }
+        System.out.print(mathExpression + " = ");
+        System.out.printf((result == (int) result) ? "%.0f" : "%.3f", result);
     }
-
 }

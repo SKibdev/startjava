@@ -4,12 +4,14 @@ import java.lang.Math;
 
 public class Calculator {
 
+    private static final int expressionLength = 3;
+
     private static int num1;
     private static int num2;
     private static char sign;
 
-    public static double  calculate(String mathExpression) throws RuntimeException{
-        parse(mathExpression);
+    public static double  calculate(String expression) {
+        parse(expression);
         return switch (sign) {
             case '+' -> num1 + num2;
             case '-' -> num1 - num2;
@@ -21,18 +23,18 @@ public class Calculator {
         };
     }
 
-    private static void parse(String mathExpression) throws RuntimeException {
-        String[] elements = mathExpression.split(" ");
-        if (elements.length != 3) {
+    private static void parse(String expression) {
+        String[] elements = expression.split(" ");
+        if (elements.length != expressionLength) {
             throw new RuntimeException("Ошибка!!! Мат. выражение не в формате \"А + В\"");
         }
+        sign = elements[1].charAt(0);
         try {
-            if (Integer.parseInt(elements[0]) <= 0 || Integer.parseInt(elements[2]) <= 0) {
-                throw new RuntimeException("Ошибка!!! Числа должны быть положительными!");
-            }
-            sign = elements[1].charAt(0);
             num1 = Integer.parseInt(elements[0]);
             num2 = Integer.parseInt(elements[2]);
+            if (num1 <= 0 || num2 <= 0) {
+                throw new RuntimeException("Ошибка!!! Числа должны быть положительными!");
+            }
         } catch (NumberFormatException ex) {
             throw new NumberFormatException("Ошибка!!! Операции возможны только над целыми числами!");
         }

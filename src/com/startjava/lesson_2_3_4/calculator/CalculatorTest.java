@@ -12,11 +12,11 @@ public  class CalculatorTest {
 
         while (!answer.equals("no")) {
             if (answer.equals("yes")) {
-                String mathExpression = enterMathExpression();
+                String expression = enterExpression();
                 try {
-                    double result = Calculator.calculate(mathExpression);
-                    showResult(mathExpression, result);
-                } catch (Exception ex) {
+                    double result = Calculator.calculate(expression);
+                    showResult(expression, result);
+                } catch (RuntimeException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
@@ -29,16 +29,16 @@ public  class CalculatorTest {
         console.close();
     }
 
-    private static String enterMathExpression() {
+    private static String enterExpression() {
         System.out.print("""
                         \nВозможные математические операции "+, -, *, /, ^, %."
-                        Опреации производятся только над целыми положительными числами
+                        Операции производятся только над целыми положительными числами
                         Введите математическое выражение в формате "А + В":\s""");
         return console.nextLine();
     }
 
-    private static void showResult(String mathExpression, double result) {
-        System.out.print(mathExpression + " = ");
+    private static void showResult(String expression, double result) {
+        System.out.print(expression + " = ");
         System.out.printf((result == (int) result) ? "%.0f" : "%.3f", result);
     }
 }

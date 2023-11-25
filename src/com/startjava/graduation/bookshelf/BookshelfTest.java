@@ -3,10 +3,25 @@ package com.startjava.graduation.bookshelf;
 import java.util.Scanner;
 
 public class BookshelfTest {
-// Если шкаф пустой, то методы удалить и найти выводят лишний раз надпись Для продолжения нажмите Enter
-// TO DO Надо вывод длинных книг как то решить
-    // Логику по выводу книг надо перенести из Book в Bookcase, чтобы название резалось во время вывода,
-// а хранились полные данные о книги. А в идеале сразу сделать динамический шкаф.
+    /*
+    TO DO
+    1. Если шкаф пустой, то методы удалить и найти выводят лишний раз надпись Для продолжения нажмите Enter
+
+    3. Логику по выводу книг надо перенести из Book в BookcaseTest, не резать книги, сделать динамический шкаф.
+        3.1 чтобы при выводе данных книги не перечислять все геттеры класса Book, реализуйте в нем метод toString()
+        3.2 чтобы вызывать у объекта метод toString() в println, достаточно написать имя объекта,
+        и он вызовется автоматически.
+        3.3 для отображения полок можно использовать метод repeat().
+        3.4 класс Book и Bookshelf не должны содержать код, связанный с рисованием полки.
+    4. Надо все пункты меню оформить в отдельные методы и убрать дублирования кода.
+    5. Выстроить методы в правильном порядке.
+        5.1 методы в классе Книжный шкаф размещайте в том же порядке, в котором они идут в меню
+    6. Сделать обработку исключений.
+        Выводите подходящие сообщения, если книга не была удалена, найдена, не может быть сохранена,
+        т. к. на полке кончилось место или пользователь ввел недопустимую команду.
+        При этом программа не должна падать.
+     */
+
     static Scanner console = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -15,10 +30,10 @@ public class BookshelfTest {
                 ДОБРО ПОЖАЛОВАТЬ В ПРОГРАММУ
                         КНИЖНЫЙ ШКАФ""");
 
-        while (runMenu()) {
-            visualizationBookshelf();
-            pressEnter();
-        }
+            while (runMenu()) {
+                visualizationBookshelf();
+                pressEnter();
+            }
     }
 
     private static boolean runMenu() {
@@ -43,10 +58,13 @@ public class BookshelfTest {
         console.nextLine();
         switch (menuItem) {
             case 1 -> {
-                displayAddBook();
+                executeAddBook();
                 pressEnter();
             }
             case 2 -> {
+                if (Bookshelf.getQuantityBooks() == 0) {
+                    break;
+                }
                 System.out.println("        ПОИСК КНИГИ\nВведите название книги: ");
                 String searchQuery = console.nextLine();
                 int searchIndex = Bookshelf.findBook(searchQuery);
@@ -58,6 +76,9 @@ public class BookshelfTest {
                 pressEnter();
             }
             case 3 -> {
+                if (Bookshelf.getQuantityBooks() == 0) {
+                    break;
+                }
                 System.out.println("УДАЛЕНИЕ КНИГИ\nВведите название книги: ");
                 String searchQuery = console.nextLine();
                 int searchIndex = Bookshelf.findBook(searchQuery);
@@ -68,19 +89,15 @@ public class BookshelfTest {
                             "? (для подтверждения введите \"y\" иначе книга удалена не будет)");
                     if (console.nextLine().equals("y")) {
                         Bookshelf.deleteBook(searchIndex);
-                        System.out.println("Книга успешно удалена!");
                     }
                 }
                 pressEnter();
             }
-            case 4 -> {
-                Bookshelf.clearBookshelf();
-                System.out.println("Шкаф пуст");
-            }
+            case 4 -> Bookshelf.clearBookshelf();
             case 5 -> {
                 return false;
             }
-            default -> System.out.print("Попробуйте еще раз");
+            default -> throw new RuntimeException("Попробуйте еще раз");
         }
         return true;
     }
@@ -92,7 +109,7 @@ public class BookshelfTest {
       }
     }
 
-    private static void displayAddBook() {
+    private static void executeAddBook() {
         if (Bookshelf.getQuantityBooks() < 10) {
             System.out.println("Введите автора книги");
             String author = console.nextLine();
@@ -103,7 +120,6 @@ public class BookshelfTest {
             //Добавлено, чтобы избежать ввода лишнего "\n" после nextInt();
             console.nextLine();
             Bookshelf.addBook(author, title, year);
-            System.out.println("Книга добавлена!");
         } else {
             System.out.println("В шкафу нет пустых полок!");
         }
@@ -113,18 +129,33 @@ public class BookshelfTest {
         if (Bookshelf.getQuantityBooks() > 0) {
             System.out.println("""
                 \nВ шкафу книг -\s""" + Bookshelf.getQuantityBooks() + """ 
-                , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n\n" + Bookshelf.getAllBooks());
+                , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n");
+            Book[] allBooks = Bookshelf.getAllBooks();
+            for (Book allBook : allBooks) {
+                String spaces = " ".repeat(Bookshelf.getShelfLength() - allBook.getInfoLength());
+                String minus = "-".repeat(Bookshelf.getShelfLength());
+                System.out.println("|" + allBook + spaces + "|\n|" + minus + "|");
+            }
+        } else {
+            System.out.println("Шкаф пуст. Вы можете добавить в него первую книгу!!!");
         }
     }
+/*
+// Добавляем недостающие пробелы для выравнивания полки
+        // Количесвто пробелов = длина шкафа 44 символа - длина информации о книге + 4 длина разделитейлей ", "
+        int quantitySpace = 44 - (informationLength + 4);
+        String spaceStr = "";
+             for (int i = 1; i <= quantitySpace; i++) {
+                spaceStr += " ";
+            }
 
+        return "|" + author + ", " + title + ", " + year + spaceStr +
+                "|\n|--------------------------------------------|\n";
+ */
 
 
     /*
-    TO DO
-    Запуск
-    "Шкаф пуст. Вы можете добавить в него первую книгу"
-    После каждой выполненной операции выводите сообщение:
-    "Для продолжения нажмите Enter"
+
 
 Bookshelf.getNumberFreeShelves:
     В шкафу книг - 2, свободно полок - 8

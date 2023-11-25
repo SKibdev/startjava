@@ -4,19 +4,15 @@ public class Book {
     private String author;
     private String title;
     private int year;
-    private int informationLength;
+    private int infoLength;
+
 
     public String getAuthor() {
         return author;
     }
 
     public void setAuthor(String author) {
-        if (author.length() <= 15) {
             this.author = author;
-        } else {
-            this.author = author.substring(0,15);
-        }
-        informationLength += this.author.length();
     }
 
     public String getTitle() {
@@ -24,12 +20,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        if (title.length() <= 21) {
             this.title = title;
-        } else {
-            this.title = title.substring(0,21);
-        }
-        informationLength += this.title.length();
     }
 
     public int getYear() {
@@ -37,30 +28,20 @@ public class Book {
     }
 
     public void setYear(int year) {
-        if (year > 0 && year <= 2023) {
-            this.year = year;
-        } else {
-            this.year = 0;
-        }
-        informationLength += String.valueOf(this.year).length();
+        this.year = year;
     }
 
-    public void setInformationLength(int informationLength) {
-        this.informationLength = informationLength;
+    public void setInfoLength(int infoLength) {
+        this.infoLength = infoLength;
+    }
+
+    public int getInfoLength() {
+        return infoLength;
     }
 
     @Override
     public String toString() {
-        // Добавляем недостающие пробелы для выравнивания полки
-        // Количесвто пробелов = длина шкафа 44 символа - длина информации о книге + 4 длина разделитейлей ", "
-        int quantitySpace = 44 - (informationLength + 4);
-        String spaceStr = "";
-             for (int i = 1; i <= quantitySpace; i++) {
-                spaceStr += " ";
-            }
-
-        return "|" + author + ", " + title + ", " + year + spaceStr +
-                "|\n|--------------------------------------------|\n";
+        return author + ", " + title + ", " + year;
     }
 }
 /*

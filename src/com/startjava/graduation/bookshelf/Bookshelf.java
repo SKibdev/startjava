@@ -9,9 +9,10 @@ public class Bookshelf {
         return quantityBooks;
     }
 
-    public static void setShelfLength(int infoLength) {
+    public static void setShelfLength(int infoLength, int index) {
         if (infoLength > shelfLength) {
             shelfLength = infoLength;
+            books[index].setMaxLength(true);
         }
     }
 
@@ -26,8 +27,8 @@ public class Bookshelf {
         books[quantityBooks].setYear(year);
         // 4 - это длина разделителей "' "
         int infoLength = author.length() + title.length() + String.valueOf(year).length() + 4;
-        books[quantityBooks++].setInfoLength(infoLength);
-        setShelfLength(infoLength);
+        books[quantityBooks].setInfoLength(infoLength);
+        setShelfLength(infoLength, quantityBooks++);
         System.out.println("Книга добавлена успешно!");
     }
 

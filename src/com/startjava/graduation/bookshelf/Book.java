@@ -5,6 +5,7 @@ public class Book {
     private String title;
     private int year;
     private int infoLength;
+    private boolean maxLength;
 
 
     public String getAuthor() {
@@ -37,6 +38,14 @@ public class Book {
 
     public int getInfoLength() {
         return infoLength;
+    }
+
+    public boolean isMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(boolean maxLength) {
+        this.maxLength = maxLength;
     }
 
     @Override

@@ -5,12 +5,6 @@ public class Book {
     private String title;
     private int year;
     private int infoLength;
-    private boolean maxLength;
-
-
-    public String getAuthor() {
-        return author;
-    }
 
     public void setAuthor(String author) {
             this.author = author;
@@ -22,10 +16,6 @@ public class Book {
 
     public void setTitle(String title) {
             this.title = title;
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public void setYear(int year) {
@@ -40,23 +30,9 @@ public class Book {
         return infoLength;
     }
 
-    public boolean isMaxLength() {
-        return maxLength;
-    }
-
-    public void setMaxLength(boolean maxLength) {
-        this.maxLength = maxLength;
-    }
-
     @Override
     public String toString() {
         return author + ", " + title + ", " + year;
     }
 }
-/*
-|Ирвинг Стоун, Жажда жизни, 1973             |
---------------------------------------------|
-|Рэй Брэдбери, 451 градус по Фаренгейту, 1980|
-|--------------------------------------------|
-|                                            |
- */
+

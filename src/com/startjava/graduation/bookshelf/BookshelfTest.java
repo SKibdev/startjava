@@ -5,15 +5,15 @@ import java.util.Scanner;
 public class BookshelfTest {
     /*
     TO DO
-    1. Не работает удаление - удаляется только последний элемнт, что-то не так копируется.
+    1. !!Ошибка при удалении - когда 10 книг при удалении 1 выдает ошибку и удаляет последний элемент
+    arraycopy: last source index 11 out of bounds for object array[10]
     3. Логику по выводу книг надо перенести из Book в BookcaseTest, не резать книги, сделать динамический шкаф.
-        Добавил наибольшую длину в Воок.
 
-        3.1 чтобы при выводе данных книги не перечислять все геттеры класса Book, реализуйте в нем метод toString()
+        3.1 чтобы при выводе данных книги не перечислять все геттеры класса Book, реализуйте в нем метод toString()+
         3.2 чтобы вызывать у объекта метод toString() в println, достаточно написать имя объекта,
-        и он вызовется автоматически.
-        3.3 для отображения полок можно использовать метод repeat().
-        3.4 класс Book и Bookshelf не должны содержать код, связанный с рисованием полки.
+        и он вызовется автоматически.+
+        3.3 для отображения полок можно использовать метод repeat().+
+        3.4 класс Book и Bookshelf не должны содержать код, связанный с рисованием полки.+
     4. Надо все пункты меню оформить в отдельные методы и убрать дублирования кода.
     5. Выстроить методы в правильном порядке.
         5.1 методы в классе Книжный шкаф размещайте в том же порядке, в котором они идут в меню
@@ -30,14 +30,56 @@ public class BookshelfTest {
                 
                 ДОБРО ПОЖАЛОВАТЬ В ПРОГРАММУ
                         КНИЖНЫЙ ШКАФ""");
+        boolean isNext = true;
 
-            while (runMenu()) {
+        while (isNext) {
+            try {
+                isNext = runMenu();
                 visualizationBookshelf();
                 pressEnter();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                pressEnter();
             }
+        }
     }
 
     private static boolean runMenu() {
+        visualizationMenu();
+        int menuItem = console.nextInt();
+        console.nextLine();
+        switch (menuItem) {
+            case 1 -> {
+                executeAddBook();
+                pressEnter();
+            }
+            case 2 -> {
+                checkQuantityBooks();
+                find(false);
+                pressEnter();
+            }
+            case 3 -> {
+                if (Bookshelf.getQuantityBooks() == 0) {
+                    break;
+                }
+                find(true);
+                pressEnter();
+            }
+            case 4 -> {
+                if (Bookshelf.getQuantityBooks() == 0) {
+                    break;
+                }
+                Bookshelf.clearBookshelf();
+            }
+            case 5 -> {
+                return false;
+            }
+            default -> throw new RuntimeException("Попробуйте еще раз");
+        }
+        return true;
+    }
+
+    private static void visualizationMenu() {
         if (Bookshelf.getQuantityBooks() == 0) {
             System.out.println("\nШкаф пуст. Вы можете добавить в него первую книгу\n");
         } else {
@@ -54,60 +96,6 @@ public class BookshelfTest {
                 5. Завершить
                 
                 Введите выбранный пункт меню:\s""");
-
-        int menuItem = console.nextInt();
-        console.nextLine();
-        switch (menuItem) {
-            case 1 -> {
-                executeAddBook();
-                pressEnter();
-            }
-            case 2 -> {
-                if (Bookshelf.getQuantityBooks() == 0) {
-                    break;
-                }
-                System.out.println("        ПОИСК КНИГИ\nВведите название книги: ");
-                String searchQuery = console.nextLine();
-                int searchIndex = Bookshelf.findBook(searchQuery);
-                if (searchIndex == -1) {
-                    System.out.println("Книга не найдена!");
-                } else {
-                    System.out.println("Результат поиска: \n" + Bookshelf.getBook(searchIndex));
-                }
-                pressEnter();
-            }
-            case 3 -> {
-                if (Bookshelf.getQuantityBooks() == 0) {
-                    break;
-                }
-                System.out.println("УДАЛЕНИЕ КНИГИ\nВведите название книги: ");
-                String searchQuery = console.nextLine();
-                int searchIndex = Bookshelf.findBook(searchQuery);
-                if (searchIndex == -1) {
-                    System.out.println("Книга не найдена!");
-                } else {
-                    System.out.println("Удалить книгу: \n" + Bookshelf.getBook(searchIndex) +
-                            "? (для подтверждения введите \"y\" иначе книга удалена не будет)");
-                    if (console.nextLine().equals("y")) {
-                        Bookshelf.deleteBook(searchIndex);
-                    }
-                }
-                pressEnter();
-            }
-            case 4 -> Bookshelf.clearBookshelf();
-            case 5 -> {
-                return false;
-            }
-            default -> throw new RuntimeException("Попробуйте еще раз");
-        }
-        return true;
-    }
-
-    private static void pressEnter() {
-        System.out.print("\nДля продолжения нажмите Enter");
-        if (console.nextLine() != "") {
-            console.nextLine();
-      }
     }
 
     private static void executeAddBook() {
@@ -120,68 +108,55 @@ public class BookshelfTest {
             int year = console.nextInt();
             //Добавлено, чтобы избежать ввода лишнего "\n" после nextInt();
             console.nextLine();
-            Bookshelf.addBook(author, title, year);
+            Bookshelf.setBook(author, title, year);
         } else {
             System.out.println("В шкафу нет пустых полок!");
         }
     }
 
-    private static void visualizationBookshelf() {
-        if (Bookshelf.getQuantityBooks() > 0) {
-            System.out.println("""
-                \nВ шкафу книг -\s""" + Bookshelf.getQuantityBooks() + """ 
-                , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n");
-            Book[] allBooks = Bookshelf.getAllBooks();
-            for (Book allBook : allBooks) {
-                String spaces = " ".repeat(Bookshelf.getShelfLength() - allBook.getInfoLength());
-                String minus = "-".repeat(Bookshelf.getShelfLength());
-                System.out.println("|" + allBook + spaces + "|\n|" + minus + "|");
-            }
-        } else {
-            System.out.println("Шкаф пуст. Вы можете добавить в него первую книгу!!!");
+    private static void pressEnter() {
+        System.out.print("\nДля продолжения нажмите Enter");
+        if (console.nextLine() != "") {
+            console.nextLine();
         }
     }
-/*
-// Добавляем недостающие пробелы для выравнивания полки
-        // Количесвто пробелов = длина шкафа 44 символа - длина информации о книге + 4 длина разделитейлей ", "
-        int quantitySpace = 44 - (informationLength + 4);
-        String spaceStr = "";
-             for (int i = 1; i <= quantitySpace; i++) {
-                spaceStr += " ";
+
+    private static void checkQuantityBooks() {
+        if (Bookshelf.getQuantityBooks() == 0) {
+            throw new RuntimeException ("Шкаф пуст. Вы можете добавить в него первую книгу");
+        }
+    }
+
+    private static void find(boolean isForDeletion) {
+        System.out.println((isForDeletion ? "УДАЛЕНИЕ" : "ПОИСК") +
+                " КНИГИ\nВведите название книги: ");
+        String searchQuery = console.nextLine();
+        int searchIndex = Bookshelf.findBook(searchQuery);
+        if (searchIndex == -1) {
+            System.out.println("Книга не найдена!");
+        } else {
+            if (isForDeletion) {
+                System.out.println("Удалить книгу: \n" + Bookshelf.getBook(searchIndex) +
+                        "? (для подтверждения введите \"y\" иначе книга удалена не будет)");
+                if (console.nextLine().equals("y")) {
+                    Bookshelf.deleteBook(searchIndex);
+                }
+            } else {
+                System.out.println("Результат поиска:" + "\n" + Bookshelf.getBook(searchIndex));
             }
+        }
+    }
 
-        return "|" + author + ", " + title + ", " + year + spaceStr +
-                "|\n|--------------------------------------------|\n";
- */
-
-
-    /*
-
-
-Bookshelf.getNumberFreeShelves:
-    В шкафу книг - 2, свободно полок - 8
-
-Bookshelf.get all books:
-|Ирвинг Стоун, Жажда жизни, 1973             |
-|--------------------------------------------|
-|Рэй Брэдбери, 451 градус по Фаренгейту, 1980|
-|--------------------------------------------|
-|                                            |
-
-    menu
-    Посмотреть содержимое шкафа
-    Bookshelf.get all books + Bookshelf.getNumberFreeShelves
-
-    Добавить книгу Bookshelf.addBook();
-    Найти книгу Bookshelf.searchBook();
-    Удалить книгу Bookshelf.deleteBook();
-    Очистить шкаф Bookshelf.clearBookshelf();
-    Завершить
-
-    Класс для размещения меню, обработки выбора пользователя,
-    ввода необходимой для работы методов класса Книжный шкаф информации
-    и вывода возвращаемых ими данных
-
-     */
-
+    private static void visualizationBookshelf() {
+        checkQuantityBooks();
+        System.out.println("""
+             \nВ шкафу книг -\s""" + Bookshelf.getQuantityBooks() + """ 
+             , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n");
+        Book[] allBooks = Bookshelf.getAllBooks();
+        for (Book allBook : allBooks) {
+            String spaces = " ".repeat(Bookshelf.getShelfLength() - allBook.getInfoLength());
+            String minus = "-".repeat(Bookshelf.getShelfLength());
+            System.out.println("|" + allBook + spaces + "|\n|" + minus + "|");
+        }
+    }
 }

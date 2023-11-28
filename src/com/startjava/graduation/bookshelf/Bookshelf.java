@@ -51,10 +51,19 @@ public class Bookshelf {
     public static void deleteBook(int indexDel) {
         int tmpLength = books[indexDel].getInfoLength();
         //Удаляем книгу
-        if (quantityBooks > 1) {
-            System.arraycopy(books, (indexDel + 1), books, indexDel, ((quantityBooks--) - indexDel));
-            books[quantityBooks] = null;
-            //Корректируем длину шкафа
+        if (quantityBooks > 1 && indexDel < (books.length - 1)) {
+            System.arraycopy(books, (indexDel + 1), books, indexDel, (quantityBooks - (indexDel + 1)));
+            books[quantityBooks - 1] = null;
+            quantityBooks--;
+        } else {
+            books[indexDel] = null;
+            quantityBooks--;
+            if (indexDel == 0) {
+
+            }
+        }
+        //Корректируем длину шкафа
+        if (quantityBooks > 0) {
             if (tmpLength == shelfLength) {
                 int[] maxLength = new int[quantityBooks];
                 for (int i = 0; i < quantityBooks; i++) {
@@ -64,8 +73,6 @@ public class Bookshelf {
                 shelfLength = maxLength[quantityBooks - 1];
             }
         } else {
-            books[indexDel] = null;
-            quantityBooks = 0;
             shelfLength = 0;
         }
         System.out.println("Книга успешно удалена!");
@@ -80,8 +87,12 @@ public class Bookshelf {
         System.out.println("Все книги из шкафа удалены!!!");
     }
 
+    public static int getBookLength() {
+        return books.length;
+    }
+
     public static int getFreeShelves() {
-        return 10 - quantityBooks;
+        return books.length - quantityBooks;
     }
 
     public static Book[] getAllBooks() {

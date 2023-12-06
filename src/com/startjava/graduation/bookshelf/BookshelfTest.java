@@ -43,17 +43,20 @@ public class BookshelfTest {
             }
             case 2 -> {
                 checkQuantityBooks();
-                find(false);
+                System.out.print("ПОИСК");
+                System.out.println("Результат поиска:" + "\n" + Bookshelf.getBook(find()));
                 pressEnter();
             }
             case 3 -> {
                 checkQuantityBooks();
-                find(true);
+                System.out.print("УДАЛЕНИЕ");
+                delete();
                 pressEnter();
             }
             case 4 -> {
                 checkQuantityBooks();
                 Bookshelf.clearBookshelf();
+                System.out.println("Все книги из шкафа удалены!!!");
             }
             case 5 -> {
                 return false;
@@ -89,15 +92,18 @@ public class BookshelfTest {
             System.out.println("Введите название книги");
             String title = console.nextLine();
             System.out.println("Введите год издания");
-            int year;
+            int yearPublication;
             try {
-                year = console.nextInt();
+                yearPublication = console.nextInt();
             } catch (RuntimeException e) {
                 throw new RuntimeException("Ошибка! Книга не добавлена! Год издания вводите в числовом формате!");
             }
             //Добавлено, чтобы избежать ввода лишнего "\n" после nextInt();
             console.nextLine();
-            Bookshelf.setBook(author, title, year);
+            // 4 - это длина разделителей "' "
+            int infoLength = author.length() + title.length() + String.valueOf(yearPublication).length() + 4;
+            Bookshelf.setBook(new Book(author, title, yearPublication, infoLength));
+            System.out.println("Книга добавлена успешно!");
         } else {
             System.out.println("Невозможно добавить книгу! В шкафу нет пустых полок!");
         }
@@ -116,25 +122,20 @@ public class BookshelfTest {
         }
     }
 
-    private static void find(boolean isForDeletion) {
-        System.out.println((isForDeletion ? "УДАЛЕНИЕ" : "ПОИСК") +
-                " КНИГИ\nВведите название книги: ");
-        String searchQuery = console.nextLine();
-        int searchIndex = Bookshelf.findBook(searchQuery);
-        if (searchIndex == -1) {
-            System.out.println("Книга не найдена!");
+    private static int find() {
+        System.out.println(" КНИГИ\nВведите название книги: ");
+        String title = console.nextLine();
+        return Bookshelf.find(title);
+    }
+
+    private static void delete() {
+        int searchIndex = find();
+        System.out.println("Для подтверждения удаления книги введите \"да\" и нажмите Enter: \n" + Bookshelf.getBook(searchIndex));
+        if (console.nextLine().equals("да")) {
+            Bookshelf.delete(searchIndex);
+            System.out.println("Книга успешно удалена!");
         } else {
-            if (isForDeletion) {
-                System.out.println("Для подтверждения удаления книги введите \"да\" и нажмите Enter: \n" +
-                        Bookshelf.getBook(searchIndex));
-                if (console.nextLine().equals("да")) {
-                    Bookshelf.deleteBook(searchIndex);
-                } else {
-                    System.out.println("Вы отменили удаление книги!");
-                }
-            } else {
-                System.out.println("Результат поиска:" + "\n" + Bookshelf.getBook(searchIndex));
-            }
+            System.out.println("Вы отменили удаление книги!");
         }
     }
 

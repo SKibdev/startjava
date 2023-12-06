@@ -1,29 +1,20 @@
 package com.startjava.graduation.bookshelf;
 
 public class Book {
-    private String author;
-    private String title;
-    private int year;
-    private int infoLength;
+    private final String author;
+    private final String title;
+    private final int yearPublication;
+    private final int infoLength;
 
-    public void setAuthor(String author) {
-            this.author = author;
+    public Book(String author, String title, int yearPublication, int infoLength) {
+        this.author = author;
+        this.title = title;
+        this.yearPublication = yearPublication;
+        this.infoLength = infoLength;
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-            this.title = title;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setInfoLength(int infoLength) {
-        this.infoLength = infoLength;
     }
 
     public int getInfoLength() {
@@ -32,7 +23,12 @@ public class Book {
 
     @Override
     public String toString() {
-        return author + ", " + title + ", " + year;
+        return author + ", " + title + ", " + yearPublication;
+    }
+
+    @Override
+    public Object clone() {
+        return new Book(author, title, yearPublication, infoLength);
     }
 }
 

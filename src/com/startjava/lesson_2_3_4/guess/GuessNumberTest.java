@@ -3,20 +3,21 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Scanner;
 
 public class GuessNumberTest {
-    
+
     public static void main(String[] args) {
         String answer = "yes";
         // Если в терминале не отображается кириллица, то необходимо добавить "cp866": Scanner(System.in, "cp866")
         Scanner input = new Scanner(System.in);
         printRules();
-        System.out.println("Введите имя Игрока 1: ");
-        String namePlayer1 = input.nextLine();
-        System.out.println("Введите имя Игрока 2: ");
-        String namePlayer2 = input.nextLine();
+        String[] names = new String[3];
+        for (int i = 0; i < names.length; i++) {
+            System.out.println("Введите имя Игрока №" +(i + 1) + ": ");
+            names[i] = input. nextLine();
+        }
 
         do {
             if (answer.equals("yes")) {
-                GuessNumber game = new GuessNumber(namePlayer1, namePlayer2);
+                GuessNumber game = new GuessNumber(names[0], names[1], names[2]);
                 game.start();
             }
 

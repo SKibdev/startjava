@@ -11,7 +11,6 @@ public class GuessNumber {
     private Player[] playersDraw = new Player[3];
     private int mysteryNumber;
 
-
     public GuessNumber(String player1, String player2, String player3) {
         players[0] = new Player(player1);
         players[1] = new Player(player2);
@@ -19,7 +18,7 @@ public class GuessNumber {
     }
 
     public void start() {
-        System.out.println("\nИгра началась! В  игре 3 раунда.\n");
+        System.out.println("\nИгра началась! В игре 3 раунда.\n");
         boolean isNext = true;
         mysteryNumber = (int) ((Math.random() * 100) + 1);
         castLots();

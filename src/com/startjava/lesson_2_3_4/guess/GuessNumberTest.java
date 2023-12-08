@@ -11,7 +11,7 @@ public class GuessNumberTest {
         printRules();
         String[] names = new String[3];
         for (int i = 0; i < names.length; i++) {
-            System.out.println("Введите имя Игрока №" +(i + 1) + ": ");
+            System.out.println("Введите имя Игрока №" + (i + 1) + ": ");
             names[i] = input. nextLine();
         }
 

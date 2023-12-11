@@ -3,24 +3,19 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Scanner;
 
 public class GuessNumberTest {
+    // Если в терминале не отображается кириллица, то необходимо добавить "cp866": Scanner(System.in, "cp866")
+    public static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
         String answer = "yes";
-        // Если в терминале не отображается кириллица, то необходимо добавить "cp866": Scanner(System.in, "cp866")
-        Scanner input = new Scanner(System.in);
         printRules();
-        String[] names = new String[3];
-        for (int i = 0; i < names.length; i++) {
-            System.out.println("Введите имя Игрока №" + (i + 1) + ": ");
-            names[i] = input. nextLine();
-        }
+        String[] names = enterPlayerNames();
 
         do {
             if (answer.equals("yes")) {
-                GuessNumber game = new GuessNumber(names[0], names[1], names[2]);
+                GuessNumber game = new GuessNumber(names);
                 game.start();
             }
-
             System.out.println("\nХотите продолжить игру? [yes/no]: ");
             answer = input.nextLine();
         } while (!answer.equals("no"));
@@ -42,5 +37,14 @@ public class GuessNumberTest {
                 4. Игра продолжается до тех пор, пока число не будет угадано
                 5. В игре должны использоваться только целые положительные числа в полуинтервале (0, 100]
                 """);
+    }
+
+    private static String [] enterPlayerNames(){
+        String[] names = new String[GuessNumber.QUANTITY_PLAYERS];
+        for (int i = 0; i < names.length; i++) {
+            System.out.println("Введите имя Игрока №" + (i + 1) + ": ");
+            names[i] = input.nextLine();
+        }
+    return names;
     }
 }

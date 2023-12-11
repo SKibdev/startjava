@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Player {
     private final String name;
-    private final int[] numbers = new int[10];
+    private final int[] numbers = new int[GuessNumber.QUANTITY_ROUNDS];
     private int attempt;
 
     public Player(String name) {
@@ -31,11 +31,11 @@ public class Player {
         return attempt;
     }
 
-    public int[] getAttempts() {
+    public int[] getNumbers() {
         return Arrays.copyOf(numbers, attempt);
     }
 
-    public void clearAttempts() {
+    public void  clearNumbers() {
         Arrays.fill(numbers, 0, attempt, 0);
     }
 

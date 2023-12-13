@@ -45,6 +45,6 @@ public class GuessNumberTest {
             System.out.println("Введите имя Игрока №" + (i + 1) + ": ");
             names[i] = input.nextLine();
         }
-    return names;
+        return names;
     }
 }

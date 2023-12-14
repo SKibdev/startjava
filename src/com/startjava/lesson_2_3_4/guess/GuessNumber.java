@@ -1,11 +1,13 @@
 package com.startjava.lesson_2_3_4.guess;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GuessNumber {
     public static final int QUANTITY_PLAYERS = 3;
     public static final int QUANTITY_ROUNDS = 3;
     public static final int QUANTITY_ATTEMPTS = 10;
+    public static final int MAX = 100;
     private final Player[] players = new Player[QUANTITY_PLAYERS];
     private final Scanner input = new Scanner(System.in);
     private int mysteryNumber;
@@ -37,14 +39,13 @@ public class GuessNumber {
     }
 
     private void startGameplay() {
-
         for (int i = 1; i <= QUANTITY_ROUNDS; i++) {
-            mysteryNumber = (int) ((Math.random() * 100) + 1);
+            mysteryNumber = (int) ((Math.random() * MAX) + 1);
             System.out.println("РАУНД № " + i);
             startRound();
             for (Player player : players) {
                 showNumbers(player);
-                player.clearNumbers();
+                player.clear();
             }
         }
     }
@@ -57,10 +58,7 @@ public class GuessNumber {
                     isNext = false;
                     break;
                 }
-                if (player.getAttempt() == QUANTITY_ATTEMPTS) {
-                    System.out.println("У игрока " + player.getName() + " закончились попытки\n");
-                    isNext = false;
-                }
+                isNext = isAttempt(player);
             }
         }
     }
@@ -71,13 +69,21 @@ public class GuessNumber {
         if (playerNumber == mysteryNumber) {
             System.out.println("Игрок " + player.getName() + " угадал число " + mysteryNumber + " с "
                     + player.getAttempt() + " попытки");
-            player.setNumberVictories(player.getNumberVictories() + 1);
+            player.incrementScore();
             return true;
         }
-        String resultComparison = playerNumber > mysteryNumber ? " больше" : " меньше";
 
+        String resultComparison = playerNumber > mysteryNumber ? " больше" : " меньше";
         System.out.println("Число " + playerNumber + resultComparison + " того, что загадал компьютер\n");
         return false;
+    }
+
+    private boolean isAttempt(Player player) {
+        if (player.getAttempt() == QUANTITY_ATTEMPTS) {
+            System.out.println("У игрока " + player.getName() + " закончились попытки\n");
+            return false;
+        }
+        return true;
     }
 
     public int enterNumber(Player player) {
@@ -86,7 +92,11 @@ public class GuessNumber {
             player.setNumber(input.nextInt());
         } catch (RuntimeException e) {
             input.nextLine();
-            System.out.println("Ошибка! Попробуйте еще раз!");
+            if (e instanceof InputMismatchException) {
+                System.out.println("Вводите целые числа! Попробуйте еще раз!");
+            } else {
+                System.out.println(e.getMessage());
+            }
             enterNumber(player);
         }
         return player.getNumber();
@@ -101,16 +111,22 @@ public class GuessNumber {
     }
 
     private void chooseWinner() {
-        Player winner = new Player("не определен!");
-        for (Player player : players) {
-            int playerNumberVictories = player.getNumberVictories();
-            int winnerNumberVictories = winner.getNumberVictories();
-            if (playerNumberVictories == winnerNumberVictories) {
-                winner = new Player("не определен!", playerNumberVictories);
+        Player winner = players[0];
+        int countWinner = QUANTITY_ROUNDS;
+        for (int i = 1; i < players.length; i++) {
+            int playerScore = players[i].getScore();
+            int winnerScore = winner.getScore();
+            if (playerScore == winnerScore) {
+                winner.setName(winner + ", " + players[i]);
             } else {
-                winner = playerNumberVictories > winnerNumberVictories ? player : winner;
+                winner = playerScore > winnerScore ? players[i] : winner;
+                countWinner--;
             }
         }
-        System.out.println("По итогу 3 раундов победитель игры: " + winner);
+        if (countWinner == QUANTITY_ROUNDS) {
+            System.out.println("\nПо итогу 3 раундов игра закончилась в ничью!");
+        } else {
+            System.out.println("\nПо итогу 3 раундов победителем(ями) игры стал(и) игрок(и): " + winner);
+        }
     }
 }

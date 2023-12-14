@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class GuessNumber {
     public static final int QUANTITY_PLAYERS = 3;
     public static final int QUANTITY_ROUNDS = 3;
-    public static final int QUANTITY_ATTEMPTS = 10;
+    public static final int QUANTITY_ATTEMPTS = 2;
     public static final int MAX = 100;
     private final Player[] players = new Player[QUANTITY_PLAYERS];
     private final Scanner input = new Scanner(System.in);
@@ -112,7 +112,7 @@ public class GuessNumber {
 
     private void chooseWinner() {
         Player winner = players[0];
-        int countWinner = QUANTITY_ROUNDS;
+
         for (int i = 1; i < players.length; i++) {
             int playerScore = players[i].getScore();
             int winnerScore = winner.getScore();
@@ -120,13 +120,19 @@ public class GuessNumber {
                 winner.setName(winner + ", " + players[i]);
             } else {
                 winner = playerScore > winnerScore ? players[i] : winner;
-                countWinner--;
             }
         }
-        if (countWinner == QUANTITY_ROUNDS) {
-            System.out.println("\nПо итогу 3 раундов игра закончилась в ничью!");
+
+        System.out.print("\nПо итогу 3 раундов ");
+
+        if (winner.getScore() == 0) {
+            System.out.println("победителя нет!\nНикто из игроков не выиграл не одного раунда");
         } else {
-            System.out.println("\nПо итогу 3 раундов победителем(ями) игры стал(и) игрок(и): " + winner);
+            String resultGame = winner.getName().contains(",") ?
+                    "игра закончилась в ничью!\nОдинаковое количество выгранных раундов у игроков: " :
+                    "победителем игры стал игрок: ";
+            System.out.println(resultGame + winner +
+                    "\nКоличество выгранных раундов: " + winner.getScore());
         }
     }
 }

@@ -3,8 +3,8 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Arrays;
 
 public class Player {
+    private final String name;
     private final int[] numbers = new int[GuessNumber.QUANTITY_ATTEMPTS];
-    private String name;
     private int attempt;
     private int score;
 
@@ -16,10 +16,6 @@ public class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getNumber() {
         return numbers[attempt - 1];
     }
@@ -27,10 +23,8 @@ public class Player {
     public void setNumber(int number) {
         if (number <= 0 || number > GuessNumber.MAX) {
             throw new RuntimeException("Число выходит из полуинтервале (0, 100]! Попробуй еще раз!");
-        } else {
-            numbers[attempt++] = number;
         }
-
+        numbers[attempt++] = number;
     }
 
     public int getAttempt() {
@@ -41,12 +35,12 @@ public class Player {
         return score;
     }
 
-    public int[] getNumbers() {
-        return Arrays.copyOf(numbers, attempt);
+    public void incrementScore() {
+        score++;
     }
 
-    public void incrementScore() {
-        this.score++;
+    public int[] getNumbers() {
+        return Arrays.copyOf(numbers, attempt);
     }
 
     public void  clear() {

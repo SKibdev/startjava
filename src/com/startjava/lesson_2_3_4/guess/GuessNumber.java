@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class GuessNumber {
     public static final int QUANTITY_PLAYERS = 3;
     public static final int QUANTITY_ROUNDS = 3;
-    public static final int QUANTITY_ATTEMPTS = 2;
+    public static final int QUANTITY_ATTEMPTS = 10;
     public static final int MAX = 100;
     private final Player[] players = new Player[QUANTITY_PLAYERS];
     private final Scanner input = new Scanner(System.in);
@@ -58,7 +58,7 @@ public class GuessNumber {
                     isNext = false;
                     break;
                 }
-                isNext = isAttempt(player);
+                isNext = hasAttempt(player);
             }
         }
     }
@@ -78,7 +78,7 @@ public class GuessNumber {
         return false;
     }
 
-    private boolean isAttempt(Player player) {
+    private boolean hasAttempt(Player player) {
         if (player.getAttempt() == QUANTITY_ATTEMPTS) {
             System.out.println("У игрока " + player.getName() + " закончились попытки\n");
             return false;
@@ -112,27 +112,27 @@ public class GuessNumber {
 
     private void chooseWinner() {
         Player winner = players[0];
+        StringBuilder leaderNames = new StringBuilder(winner.getName());
 
         for (int i = 1; i < players.length; i++) {
-            int playerScore = players[i].getScore();
-            int winnerScore = winner.getScore();
-            if (playerScore == winnerScore) {
-                winner.setName(winner + ", " + players[i]);
+            if (players[i].getScore() == winner.getScore()) {
+                leaderNames.append(", ").append(players[i]);
             } else {
-                winner = playerScore > winnerScore ? players[i] : winner;
+                winner = players[i].getScore() > winner.getScore() ? players[i] : winner;
+                leaderNames = new StringBuilder(winner.getName());
             }
         }
 
         System.out.print("\nПо итогу 3 раундов ");
 
         if (winner.getScore() == 0) {
-            System.out.println("победителя нет!\nНикто из игроков не выиграл не одного раунда");
+            System.out.println("победителя нет!\nНи один из игроков не выиграл ни одного раунда!");
         } else {
-            String resultGame = winner.getName().contains(",") ?
-                    "игра закончилась в ничью!\nОдинаковое количество выгранных раундов у игроков: " :
+            String resultGame = leaderNames.toString().contains(",") ?
+                    "игра закончилась в ничью!\nОдинаковое количество выигранных раундов у игроков: " :
                     "победителем игры стал игрок: ";
-            System.out.println(resultGame + winner +
-                    "\nКоличество выгранных раундов: " + winner.getScore());
+            System.out.println(resultGame + leaderNames +
+                    "\nКоличество выигранных раундов: " + winner.getScore());
         }
     }
 }

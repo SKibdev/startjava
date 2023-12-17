@@ -3,56 +3,78 @@ package com.startjava.graduation.bookshelf;
 import java.util.Arrays;
 
 public class Bookshelf {
-    private static final  int MAX_QUANTITY_BOOKS = 10;
+    private static final int MAX_QUANTITY_BOOKS = 10;
     private static final Book[] books = new Book[MAX_QUANTITY_BOOKS];
-    private static int quantityBooks;
-    private static int shelfLength;
+    private int quantityBooks;
+    private int shelfLength;
 
-    public static int getQuantityBooks() {
+    public int getQuantityBooks() {
         return quantityBooks;
     }
 
-    public static int getShelfLength() {
+    public int getShelfLength() {
         return shelfLength;
     }
 
-    public static Book getBook(int index) {
-        return (Book) books[index].clone();
+    public int getBookLength() {
+        return books.length;
     }
 
-    public static void setBook(Book book) {
-        books[quantityBooks++] = (Book) book.clone();
-        determineShelfLength(book.getInfoLength());
+    public int getFreeShelves() {
+        return books.length - quantityBooks;
     }
 
-    private static void determineShelfLength(int infoLength) {
-        if (infoLength > shelfLength) {
-            shelfLength = infoLength;
+    public Book[] getAllBooks() {
+        return Arrays.copyOf(books, quantityBooks);
+    }
+
+    public void save(Book book) {
+        books[quantityBooks] = (Book) book.clone();
+        if (books[quantityBooks].getInfoLength() > shelfLength) {
+            shelfLength = books[quantityBooks].getInfoLength();
         }
+        quantityBooks++;
     }
 
-    public static int find(String title) {
+    public Book findBook(String title) {
         for (int i = 0; i < quantityBooks; i++) {
-            String str = books[i].getTitle();
-            int result = str.indexOf(title);
-            if (result > -1) {
-                return i;
+            String bookTitle = books[i].getTitle();
+            if (bookTitle.contains(title)) {
+                return books[i];
             }
         }
         throw new RuntimeException("Книга не найдена!");
     }
 
-    public static void delete(int indexDel) {
-        int tmpLength = books[indexDel].getInfoLength();
-        //Удаляем книгу
-        if (quantityBooks > 1 && indexDel < (books.length - 1)) {
-            System.arraycopy(books, (indexDel + 1), books, indexDel, (quantityBooks - (indexDel + 1)));
-            books[quantityBooks - 1] = null;
-        } else {
-            books[indexDel] = null;
+    public String deleteBook(String title) {
+        int tmpLength = -1;
+        String bookTitle = "";
+        //Ищем книгу
+        for (int i = 0; i < quantityBooks; i++) {
+            bookTitle = books[i].getTitle();
+            if (bookTitle.contains(title)) {
+                //Сохраняем длину удаляемой книги
+                tmpLength = books[i].getInfoLength();
+                //Удаляем книгу
+                if (quantityBooks > 1 &&  i < (books.length - 1)) {
+                    System.arraycopy(books, (i + 1), books, i, (quantityBooks - (i + 1)));
+                    books[quantityBooks - 1] = null;
+                    break;
+                } else {
+                    books[i] = null;
+                }
+            }
+        }
+        if (tmpLength == -1) {
+            throw new RuntimeException("Книга не найдена!");
         }
         quantityBooks--;
         //Корректируем длину шкафа
+        updateShelfLength(tmpLength);
+        return bookTitle;
+    }
+
+    private void updateShelfLength(int tmpLength) {
         if (quantityBooks > 0) {
             if (tmpLength == shelfLength) {
                 shelfLength = books[0].getInfoLength();
@@ -65,21 +87,9 @@ public class Bookshelf {
         }
     }
 
-    public static void clearBookshelf() {
-        Arrays.fill(books, null);
+    public void clearBookshelf() {
+        Arrays.fill(books, 0, quantityBooks, null);
         quantityBooks = 0;
         shelfLength = 0;
-    }
-
-    public static int getBookLength() {
-        return books.length;
-    }
-
-    public static int getFreeShelves() {
-        return books.length - quantityBooks;
-    }
-
-    public static Book[] getAllBooks() {
-        return Arrays.copyOf(books, quantityBooks);
     }
 }

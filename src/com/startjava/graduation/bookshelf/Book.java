@@ -6,11 +6,12 @@ public class Book {
     private final int yearPublication;
     private final int infoLength;
 
-    public Book(String author, String title, int yearPublication, int infoLength) {
+    public Book(String author, String title, int yearPublication) {
         this.author = author;
         this.title = title;
         this.yearPublication = yearPublication;
-        this.infoLength = infoLength;
+        // 4 - это длина разделителей "' "
+        this.infoLength = author.length() + title.length() + String.valueOf(yearPublication).length() + 4;
     }
 
     public String getTitle() {
@@ -28,7 +29,7 @@ public class Book {
 
     @Override
     public Object clone() {
-        return new Book(author, title, yearPublication, infoLength);
+        return new Book(author, title, yearPublication);
     }
 }
 

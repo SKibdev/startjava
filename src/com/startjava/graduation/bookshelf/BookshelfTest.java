@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class BookshelfTest {
     static Scanner console = new Scanner(System.in);
+    static Bookshelf bookshelf = new Bookshelf();
 
     public static void main(String[] args) {
         System.out.println("""
@@ -15,10 +16,9 @@ public class BookshelfTest {
 
         while (isNext) {
             try {
-                isNext = runMenu();
+                isNext = openMenu();
                 if (isNext) {
-                    visualizationBookshelf();
-                    pressEnter();
+                    showBookshelf();
                 }
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
@@ -27,53 +27,25 @@ public class BookshelfTest {
         }
     }
 
-    private static boolean runMenu() {
-        visualizationMenu();
-        int menuItem;
-        try {
-            menuItem = console.nextInt();
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException("Ошибка! При работе с меню необходимо ввести номер операции!");
-        }
-        console.nextLine();
-        switch (menuItem) {
-            case 1 -> {
-                executeAddBook();
-                pressEnter();
-            }
-            case 2 -> {
-                checkQuantityBooks();
-                System.out.print("ПОИСК");
-                System.out.println("Результат поиска:" + "\n" + Bookshelf.getBook(find()));
-                pressEnter();
-            }
-            case 3 -> {
-                checkQuantityBooks();
-                System.out.print("УДАЛЕНИЕ");
-                delete();
-                pressEnter();
-            }
-            case 4 -> {
-                checkQuantityBooks();
-                Bookshelf.clearBookshelf();
-                System.out.println("Все книги из шкафа удалены!!!");
-            }
+    private static boolean openMenu() {
+        showMenu();
+        switch (enterMenuItem()) {
+            case 1 -> addBook();
+            case 2 -> findBook();
+            case 3 -> deleteBook();
+            case 4 -> clearBookshelf();
             case 5 -> {
                 return false;
             }
-            default -> throw new RuntimeException("Ошибка! Такой операции нет! Попробуйте еще раз!");
+            default -> throw new RuntimeException("Ошибка! Такого пункта меню не существует!");
         }
+        pressEnter();
         return true;
     }
 
-    private static void visualizationMenu() {
-        if (Bookshelf.getQuantityBooks() == 0) {
-            System.out.println("\nШкаф пуст. Вы можете добавить в него первую книгу\n");
-        } else {
-            System.out.println("""
-                \nВ шкафу книг -\s""" + Bookshelf.getQuantityBooks() + """ 
-                , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n");
-        }
+    private static void showMenu() {
+            System.out.println("\nВ шкафу книг - " + bookshelf.getQuantityBooks() +
+                ", свободно полок - " + bookshelf.getFreeShelves() + "\n");
         System.out.println(""" 
                       Меню\s
                 1. Добавить книгу
@@ -85,8 +57,18 @@ public class BookshelfTest {
                 Введите выбранный пункт меню:\s""");
     }
 
-    private static void executeAddBook() throws InputMismatchException {
-        if (Bookshelf.getQuantityBooks() < Bookshelf.getBookLength()) {
+    private static int enterMenuItem() {
+        try {
+            int menuItem = console.nextInt();
+            console.nextLine();
+            return menuItem;
+        } catch (InputMismatchException e) {
+            throw new InputMismatchException("Ошибка! При работе с меню необходимо ввести номер операции!");
+        }
+    }
+
+    private static void addBook() {
+        if (bookshelf.getQuantityBooks() < bookshelf.getBookLength()) {
             System.out.println("Введите автора книги");
             String author = console.nextLine();
             System.out.println("Введите название книги");
@@ -100,12 +82,44 @@ public class BookshelfTest {
             }
             //Добавлено, чтобы избежать ввода лишнего "\n" после nextInt();
             console.nextLine();
-            // 4 - это длина разделителей "' "
-            int infoLength = author.length() + title.length() + String.valueOf(yearPublication).length() + 4;
-            Bookshelf.setBook(new Book(author, title, yearPublication, infoLength));
+
+            bookshelf.save(new Book(author, title, yearPublication));
             System.out.println("Книга добавлена успешно!");
         } else {
             System.out.println("Невозможно добавить книгу! В шкафу нет пустых полок!");
+        }
+    }
+
+    private static void findBook() {
+        checkQuantityBooks();
+        System.out.print("ПОИСК");
+        System.out.println("Результат поиска:\n" + bookshelf.findBook(enterTitle()));
+    }
+
+    private static void deleteBook() {
+        checkQuantityBooks();
+        System.out.print("УДАЛЕНИЕ");
+        System.out.println("Книга " + bookshelf.deleteBook(enterTitle()) + " успешно удалена!");
+    }
+
+    private static void clearBookshelf() {
+        checkQuantityBooks();
+        bookshelf.clearBookshelf();
+        System.out.println("Все книги из шкафа удалены!!!");
+    }
+
+    private static String enterTitle() {
+        System.out.println(" КНИГИ\nВведите название книги: ");
+        String title = console.nextLine();
+        if (title.equals("") || title.equals(" ")) {
+            throw new RuntimeException("Вы ввели пустой поисковый запрос!");
+        }
+        return title;
+    }
+
+    private static void checkQuantityBooks() {
+        if (bookshelf.getQuantityBooks() == 0) {
+            throw new RuntimeException ("\nШкаф пуст. Вы можете добавить в него первую книгу\n");
         }
     }
 
@@ -116,39 +130,16 @@ public class BookshelfTest {
         }
     }
 
-    private static void checkQuantityBooks() {
-        if (Bookshelf.getQuantityBooks() == 0) {
-            throw new RuntimeException ("\nШкаф пуст. Вы можете добавить в него первую книгу");
-        }
-    }
-
-    private static int find() {
-        System.out.println(" КНИГИ\nВведите название книги: ");
-        String title = console.nextLine();
-        return Bookshelf.find(title);
-    }
-
-    private static void delete() {
-        int searchIndex = find();
-        System.out.println("Для подтверждения удаления книги введите \"да\" и нажмите Enter: \n" + Bookshelf.getBook(searchIndex));
-        if (console.nextLine().equals("да")) {
-            Bookshelf.delete(searchIndex);
-            System.out.println("Книга успешно удалена!");
-        } else {
-            System.out.println("Вы отменили удаление книги!");
-        }
-    }
-
-    private static void visualizationBookshelf() {
+    private static void showBookshelf() {
         checkQuantityBooks();
-        System.out.println("""
-             \nВ шкафу книг -\s""" + Bookshelf.getQuantityBooks() + """ 
-             , свободно полок -\s""" + Bookshelf.getFreeShelves() + "\n");
-        Book[] allBooks = Bookshelf.getAllBooks();
+        System.out.println("\nВ шкафу книг - " + bookshelf.getQuantityBooks() +
+                ", свободно полок - " + bookshelf.getFreeShelves() + "\n");
+        Book[] allBooks = bookshelf.getAllBooks();
         for (Book allBook : allBooks) {
-            String spaces = " ".repeat((Bookshelf.getShelfLength() - allBook.getInfoLength()));
-            String minus = "-".repeat(Bookshelf.getShelfLength());
+            String spaces = " ".repeat((bookshelf.getShelfLength() - allBook.getInfoLength()));
+            String minus = "-".repeat(bookshelf.getShelfLength());
             System.out.println("|" + allBook + spaces + "|\n|" + minus + "|");
         }
+        pressEnter();
     }
 }

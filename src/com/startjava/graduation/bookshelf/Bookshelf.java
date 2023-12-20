@@ -3,25 +3,21 @@ package com.startjava.graduation.bookshelf;
 import java.util.Arrays;
 
 public class Bookshelf {
-    private static final int MAX_QUANTITY_BOOKS = 10;
-    private static final Book[] books = new Book[MAX_QUANTITY_BOOKS];
+    public static final int BOOKS_LIMIT = 10;
+    private static final Book[] books = new Book[BOOKS_LIMIT];
     private int quantityBooks;
-    private int shelfLength;
+    private int lengthShelves;
 
     public int getQuantityBooks() {
         return quantityBooks;
     }
 
-    public int getShelfLength() {
-        return shelfLength;
-    }
-
-    public int getBookLength() {
-        return books.length;
+    public int getLengthShelves() {
+        return lengthShelves;
     }
 
     public int getFreeShelves() {
-        return books.length - quantityBooks;
+        return BOOKS_LIMIT - quantityBooks;
     }
 
     public Book[] getAllBooks() {
@@ -30,66 +26,66 @@ public class Bookshelf {
 
     public void save(Book book) {
         books[quantityBooks] = (Book) book.clone();
-        if (books[quantityBooks].getInfoLength() > shelfLength) {
-            shelfLength = books[quantityBooks].getInfoLength();
+        if (books[quantityBooks].getInfoLength() > lengthShelves) {
+            lengthShelves = books[quantityBooks].getInfoLength();
         }
         quantityBooks++;
     }
 
-    public Book findBook(String title) {
+    public Book find(String title) {
         for (int i = 0; i < quantityBooks; i++) {
-            String bookTitle = books[i].getTitle();
-            if (bookTitle.contains(title)) {
+            String VerifiableTitle = books[i].getTitle();
+            if (VerifiableTitle.equals(title)) {
                 return books[i];
             }
         }
         throw new RuntimeException("Книга не найдена!");
     }
 
-    public String deleteBook(String title) {
-        int tmpLength = -1;
-        String bookTitle = "";
+    public String delete(String title) {
+        int currentLength = -1;
+        String VerifiableTitle = "";
         //Ищем книгу
         for (int i = 0; i < quantityBooks; i++) {
-            bookTitle = books[i].getTitle();
-            if (bookTitle.contains(title)) {
+            VerifiableTitle = books[i].getTitle();
+            if (VerifiableTitle.equals(title)) {
                 //Сохраняем длину удаляемой книги
-                tmpLength = books[i].getInfoLength();
+                currentLength = books[i].getInfoLength();
                 //Удаляем книгу
-                if (quantityBooks > 1 &&  i < (books.length - 1)) {
-                    System.arraycopy(books, (i + 1), books, i, (quantityBooks - (i + 1)));
-                    books[quantityBooks - 1] = null;
-                    break;
-                } else {
-                    books[i] = null;
+                if (quantityBooks > 1 && i != BOOKS_LIMIT - 1) {
+                    //length определяется как разница между количеством книг в шкафу (quantityBooks) и
+                    //порядковым номером удаляемой книги (i + 1)
+                    System.arraycopy(books, (i + 1), books, i, quantityBooks - (i + 1));
                 }
+                books[quantityBooks - 1] = null;
+                break;
             }
         }
-        if (tmpLength == -1) {
+        if (currentLength == -1) {
             throw new RuntimeException("Книга не найдена!");
         }
+        //Корректируем кол-во книг в шкафу и длину шкафа
         quantityBooks--;
-        //Корректируем длину шкафа
-        updateShelfLength(tmpLength);
-        return bookTitle;
+        updateLengthShelves(currentLength);
+        return VerifiableTitle;
     }
 
-    private void updateShelfLength(int tmpLength) {
+    private void updateLengthShelves(int currentLength) {
         if (quantityBooks > 0) {
-            if (tmpLength == shelfLength) {
-                shelfLength = books[0].getInfoLength();
+            if (currentLength == lengthShelves) {
+                lengthShelves = books[0].getInfoLength();
                 for (int i = 1; i < quantityBooks; i++) {
-                    shelfLength = Math.max(shelfLength, books[i].getInfoLength());
+                    lengthShelves = Math.max(lengthShelves, books[i].getInfoLength());
                 }
             }
         } else {
-            shelfLength = 0;
+            lengthShelves = 0;
         }
     }
 
     public void clearBookshelf() {
         Arrays.fill(books, 0, quantityBooks, null);
         quantityBooks = 0;
-        shelfLength = 0;
+        lengthShelves = 0;
     }
 }

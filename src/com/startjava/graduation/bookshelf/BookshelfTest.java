@@ -68,7 +68,7 @@ public class BookshelfTest {
     }
 
     private static void addBook() {
-        if (bookshelf.getQuantityBooks() < bookshelf.getBookLength()) {
+        if (bookshelf.getQuantityBooks() < Bookshelf.BOOKS_LIMIT) {
             System.out.println("Введите автора книги");
             String author = console.nextLine();
             System.out.println("Введите название книги");
@@ -93,13 +93,13 @@ public class BookshelfTest {
     private static void findBook() {
         checkQuantityBooks();
         System.out.print("ПОИСК");
-        System.out.println("Результат поиска:\n" + bookshelf.findBook(enterTitle()));
+        System.out.println("Результат поиска:\n" + bookshelf.find(enterTitle()));
     }
 
     private static void deleteBook() {
         checkQuantityBooks();
         System.out.print("УДАЛЕНИЕ");
-        System.out.println("Книга " + bookshelf.deleteBook(enterTitle()) + " успешно удалена!");
+        System.out.println("Книга " + bookshelf.delete(enterTitle()) + " успешно удалена!");
     }
 
     private static void clearBookshelf() {
@@ -136,8 +136,8 @@ public class BookshelfTest {
                 ", свободно полок - " + bookshelf.getFreeShelves() + "\n");
         Book[] allBooks = bookshelf.getAllBooks();
         for (Book allBook : allBooks) {
-            String spaces = " ".repeat((bookshelf.getShelfLength() - allBook.getInfoLength()));
-            String minus = "-".repeat(bookshelf.getShelfLength());
+            String spaces = " ".repeat((bookshelf.getLengthShelves() - allBook.getInfoLength()));
+            String minus = "-".repeat(bookshelf.getLengthShelves());
             System.out.println("|" + allBook + spaces + "|\n|" + minus + "|");
         }
         pressEnter();

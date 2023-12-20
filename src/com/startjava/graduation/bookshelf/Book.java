@@ -10,8 +10,7 @@ public class Book {
         this.author = author;
         this.title = title;
         this.yearPublication = yearPublication;
-        // 4 - это длина разделителей "' "
-        this.infoLength = author.length() + title.length() + String.valueOf(yearPublication).length() + 4;
+        infoLength = toString().length();
     }
 
     public String getTitle() {

@@ -55,7 +55,7 @@ public class Bookshelf {
                 if (quantityBooks > 1 && i != BOOKS_LIMIT - 1) {
                     //length определяется как разница между количеством книг в шкафу (quantityBooks) и
                     //порядковым номером удаляемой книги (i + 1)
-                    System.arraycopy(books, (i + 1), books, i, quantityBooks - (i + 1));
+                    System.arraycopy(books, (i + 1), books, i, quantityBooks - i - 1);
                 }
                 books[quantityBooks - 1] = null;
                 break;

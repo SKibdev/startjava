@@ -16,10 +16,8 @@ public class BookshelfTest {
 
         while (isNext) {
             try {
-                if (bookshelf.getQuantityBooks() > 0) {
-                    showBookshelf();
-                }
-                isNext = openBookshelf();
+                showBookshelf();
+                isNext = startInterface();
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
                 pressEnter();
@@ -27,24 +25,37 @@ public class BookshelfTest {
         }
     }
 
-    private static boolean openBookshelf() {
+    private static void showBookshelf() {
+        if (bookshelf.getQuantityBooks() > 0) {
+            System.out.println("\nВ шкафу книг - " + bookshelf.getQuantityBooks() +
+                    ", свободно полок - " + bookshelf.getFreeShelves() + "\n");
+            Book[] allBooks = bookshelf.getAllBooks();
+            for (Book book : allBooks) {
+                String spaces = " ".repeat((bookshelf.getLengthShelves() - book.getInfoLength()));
+                String minus = "-".repeat(bookshelf.getLengthShelves());
+                System.out.println("|" + book + spaces + "|\n|" + minus + "|");
+            }
+        } else {
+            System.out.println("\nШкаф пуст. Вы можете добавить в него первую книгу");
+        }
+    }
+
+    private static boolean startInterface() {
         showMenu();
         switch (enterMenuItem()) {
             case 1 -> saveBook();
             case 2 -> findBook();
             case 3 -> deleteBook();
             case 4 -> clearBookshelf();
-            case 5 -> {
-                return false;
-            }
-            default -> throw new RuntimeException("Ошибка! Введен не сущетсвующий порядковый номер пункта меню!");
+            case 5 -> { return false; }
+            default -> throw new RuntimeException("Ошибка! Введен не существующий порядковый номер пункта меню!");
         }
         pressEnter();
         return true;
     }
 
     private static void showMenu() {
-        System.out.println(""" 
+        System.out.print(""" 
                       
                       Меню\s
                 1. Добавить книгу
@@ -61,7 +72,7 @@ public class BookshelfTest {
             int menuItem = console.nextInt();
             console.nextLine();
             if (bookshelf.getQuantityBooks() == 0 && (menuItem > 1 && menuItem < 5)) {
-                throw new RuntimeException ("\nШкаф пуст. Вы можете добавить в него первую книгу\n");
+                throw new RuntimeException ("Ошибка! В шкафу нет книг!");
             }
             return menuItem;
         } catch (InputMismatchException e) {
@@ -71,10 +82,10 @@ public class BookshelfTest {
 
     private static void saveBook() {
         if (bookshelf.getQuantityBooks() < Bookshelf.BOOKS_LIMIT) {
-            System.out.println("Введите автора книги");
+            System.out.print("Введите автора книги: ");
             String author = console.nextLine();
             String title = enterTitle();
-            System.out.println("Введите год издания");
+            System.out.print("Введите год издания: ");
             int yearPublication;
             try {
                 yearPublication = console.nextInt();
@@ -107,10 +118,10 @@ public class BookshelfTest {
     }
 
     private static String enterTitle() {
-        System.out.println("Введите название книги: ");
+        System.out.print("Введите название книги: ");
         String title = console.nextLine();
         if (title.equals("") || title.equals(" ")) {
-            throw new RuntimeException("Вы ввели пустую стироку!");
+            throw new RuntimeException("Вы ввели пустую строку!");
         }
         return title;
     }
@@ -120,17 +131,5 @@ public class BookshelfTest {
         if (console.nextLine() != "") {
             console.nextLine();
         }
-    }
-
-    private static void showBookshelf() {
-        System.out.println("\nВ шкафу книг - " + bookshelf.getQuantityBooks() +
-                ", свободно полок - " + bookshelf.getFreeShelves() + "\n");
-        Book[] allBooks = bookshelf.getAllBooks();
-        for (Book book : allBooks) {
-            String spaces = " ".repeat((bookshelf.getLengthShelves() - book.getInfoLength()));
-            String minus = "-".repeat(bookshelf.getLengthShelves());
-            System.out.println("|" + book + spaces + "|\n|" + minus + "|");
-        }
-        pressEnter();
     }
 }

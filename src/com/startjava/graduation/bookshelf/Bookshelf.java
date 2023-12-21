@@ -34,40 +34,37 @@ public class Bookshelf {
 
     public Book find(String title) {
         for (int i = 0; i < quantityBooks; i++) {
-            String VerifiableTitle = books[i].getTitle();
-            if (VerifiableTitle.equals(title)) {
+            String checkableTitle = books[i].getTitle();
+            if (checkableTitle.equals(title)) {
                 return books[i];
             }
         }
         throw new RuntimeException("Книга не найдена!");
     }
 
-    public String delete(String title) {
+    public void delete(String title) {
         int currentLength = -1;
-        String VerifiableTitle = "";
         //Ищем книгу
         for (int i = 0; i < quantityBooks; i++) {
-            VerifiableTitle = books[i].getTitle();
-            if (VerifiableTitle.equals(title)) {
+            String checkableTitle = books[i].getTitle();
+            if (checkableTitle.equals(title)) {
                 //Сохраняем длину удаляемой книги
                 currentLength = books[i].getInfoLength();
                 //Удаляем книгу
-                if (quantityBooks > 1 && i != BOOKS_LIMIT - 1) {
+                if (quantityBooks > 1 && i < quantityBooks - 1) {
                     //length определяется как разница между количеством книг в шкафу (quantityBooks) и
                     //порядковым номером удаляемой книги (i + 1)
                     System.arraycopy(books, (i + 1), books, i, quantityBooks - i - 1);
                 }
-                books[quantityBooks - 1] = null;
+                quantityBooks--;
+                books[quantityBooks] = null;
                 break;
             }
         }
         if (currentLength == -1) {
             throw new RuntimeException("Книга не найдена!");
         }
-        //Корректируем кол-во книг в шкафу и длину шкафа
-        quantityBooks--;
         updateLengthShelves(currentLength);
-        return VerifiableTitle;
     }
 
     private void updateLengthShelves(int currentLength) {

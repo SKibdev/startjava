@@ -25,7 +25,7 @@ SELECT *
 SELECT * 
   FROM jaegers 
  WHERE launch = (SELECT MIN(launch)
-                 FROM jaegers)
+                   FROM jaegers)
  ORDER BY model_name;
 
 \echo Отображаем роботов, которые уничтожили больше всех kaiju, 

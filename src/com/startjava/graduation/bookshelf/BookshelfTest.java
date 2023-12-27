@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BookshelfTest {
+    // В текст внесены комментарии по результату разбора эталлоного кода
     static Scanner console = new Scanner(System.in);
     static Bookshelf bookshelf = new Bookshelf();
 
@@ -42,6 +43,7 @@ public class BookshelfTest {
 
     private static boolean startInterface() {
         showMenu();
+        // если item сделать String, то можно уйти от InputMismatchException
         switch (enterMenuItem()) {
             case 1 -> saveBook();
             case 2 -> findBook();
@@ -102,6 +104,8 @@ public class BookshelfTest {
     }
 
     private static void findBook() {
+        // Можно через тернарный оператор обрабатывать возвращаемые ответы от методов слоя логики
+        // String message = bs.delete(input(MESSAGE_TITLE)) ? "Книга удалена." : "Книга не найдена.";
         System.out.println("ПОИСК КНИГИ");
         System.out.println("Результат поиска:\n" + bookshelf.find(enterTitle()));
     }
@@ -127,9 +131,17 @@ public class BookshelfTest {
     }
 
     private static void pressEnter() {
-        System.out.print("\nДля продолжения нажмите Enter");
-        if (console.nextLine() != "") {
-            console.nextLine();
-        }
+//        Этот вариант тоже работает, с одни отличием, если ввести какие то символы и <Enter>
+//        то на второй раз после нажатия <Enter> программа будет работать дальше
+//        System.out.print("\nДля продолжения нажмите Enter");
+//        if (console.nextLine() != "") {
+//            console.nextLine();
+//        }
+        //В этом варианте пока не будет нажат <Enter> с пустой строкой дальше не сдвинемся
+        String key;
+        do {
+            System.out.print("\nДля продолжения работы нажмите клавишу <Enter>");
+            key = console.nextLine();
+        } while (!key.isEmpty());
     }
 }

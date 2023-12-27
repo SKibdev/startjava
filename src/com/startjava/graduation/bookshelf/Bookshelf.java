@@ -3,8 +3,10 @@ package com.startjava.graduation.bookshelf;
 import java.util.Arrays;
 
 public class Bookshelf {
+    //BOOKS_LIMIT можно было назвать CAPACITY (емкость)
     public static final int BOOKS_LIMIT = 10;
     private static final Book[] books = new Book[BOOKS_LIMIT];
+    //quantityBooks - количество чего либо, можно называть countBooks
     private int quantityBooks;
     private int lengthShelves;
 
@@ -31,7 +33,7 @@ public class Bookshelf {
         }
         quantityBooks++;
     }
-
+    // проверку на книга не найдена можно было реализовать через return null
     public Book find(String title) {
         for (int i = 0; i < quantityBooks; i++) {
             String checkableTitle = books[i].getTitle();
@@ -41,7 +43,7 @@ public class Bookshelf {
         }
         throw new RuntimeException("Книга не найдена!");
     }
-
+    //Как вариант прерывать метод (если он возвращает boolean) в нужном месте можно через return true;
     public void delete(String title) {
         int currentLength = -1;
         //Ищем книгу

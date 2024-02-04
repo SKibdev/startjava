@@ -10,7 +10,7 @@ public class BookshelfTest {
 
     public static void main(String[] args) {
         System.out.println("""
-                
+                                
                 ДОБРО ПОЖАЛОВАТЬ В ПРОГРАММУ
                         КНИЖНЫЙ ШКАФ""");
         boolean isNext = true;
@@ -49,7 +49,9 @@ public class BookshelfTest {
             case 2 -> findBook();
             case 3 -> deleteBook();
             case 4 -> clearBookshelf();
-            case 5 -> { return false; }
+            case 5 -> {
+                return false;
+            }
             default -> throw new RuntimeException("Ошибка! Введен не существующий порядковый номер пункта меню!");
         }
         pressEnter();
@@ -65,7 +67,7 @@ public class BookshelfTest {
                 3. Удалить книгу
                 4. Очистить шкаф
                 5. Завершить
-                
+                                
                 Введите порядковый номер пункта меню:\s""");
     }
 
@@ -74,7 +76,7 @@ public class BookshelfTest {
             int menuItem = console.nextInt();
             console.nextLine();
             if (bookshelf.getQuantityBooks() == 0 && (menuItem > 1 && menuItem < 5)) {
-                throw new RuntimeException ("Ошибка! В шкафу нет книг!");
+                throw new RuntimeException("Ошибка! В шкафу нет книг!");
             }
             return menuItem;
         } catch (InputMismatchException e) {

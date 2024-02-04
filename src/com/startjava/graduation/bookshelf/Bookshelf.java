@@ -33,6 +33,7 @@ public class Bookshelf {
         }
         quantityBooks++;
     }
+
     // проверку на книга не найдена можно было реализовать через return null
     public Book find(String title) {
         for (int i = 0; i < quantityBooks; i++) {
@@ -43,6 +44,7 @@ public class Bookshelf {
         }
         throw new RuntimeException("Книга не найдена!");
     }
+
     //Как вариант прерывать метод (если он возвращает boolean) в нужном месте можно через return true;
     public void delete(String title) {
         int currentLength = -1;

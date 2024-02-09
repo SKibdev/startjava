@@ -4,12 +4,12 @@ public class Calculator {
 
     public static void main(String[] args) {
         int num1 = 3;
-        int num2 = 4 ;
+        int num2 = 4;
         //  Возможные операции +, -, *, /, ^, %
         char sign = '^';
         int result = 1;
-        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' || 
-                sign == '^' || sign == '%'; 
+        boolean isSign = sign == '+' || sign == '-' || sign == '*' || sign == '/' ||
+                sign == '^' || sign == '%';
 
         if (isSign) {
             if (num1 > 0 && num2 > 0) {

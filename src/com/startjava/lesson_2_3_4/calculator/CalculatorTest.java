@@ -2,12 +2,12 @@ package com.startjava.lesson_2_3_4.calculator;
 
 import java.util.Scanner;
 
-public  class CalculatorTest {
+public class CalculatorTest {
 
     static Scanner console = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String answer ="yes";
+        String answer = "yes";
         System.out.println("\n    Добро пожаловать в программу КАЛЬКУЛЯТОР");
 
         while (!answer.equals("no")) {
@@ -31,9 +31,9 @@ public  class CalculatorTest {
 
     private static String enterExpression() {
         System.out.print("""
-                        \nВозможные математические операции "+, -, *, /, ^, %."
-                        Операции производятся только над целыми положительными числами
-                        Введите математическое выражение в формате "А + В":\s""");
+                \nВозможные математические операции "+, -, *, /, ^, %."
+                Операции производятся только над целыми положительными числами
+                Введите математическое выражение в формате "А + В":\s""");
         return console.nextLine();
     }
 
